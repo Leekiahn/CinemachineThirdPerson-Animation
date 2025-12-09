@@ -1,0 +1,81 @@
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    private PlayerInputHandler inputHandler;
+    private Rigidbody rigidbody;
+
+    [Header("Movement Settings")]
+    public float moveSpeed = 5f;
+    public float acceleration = 10f;
+    public float deceleration = 15f;
+
+    private Vector3 currentVelocity;
+
+    public bool useAcceleration = true;
+
+    private void Awake()
+    {
+        inputHandler = GetComponent<PlayerInputHandler>();
+        rigidbody = GetComponent<Rigidbody>();
+    }
+    private void FixedUpdate()
+    {
+        if(useAcceleration)
+        {
+            MoveWithAcceleration();
+        }
+        else
+        {
+            MoveSimple();
+        }
+    }
+
+    private void MoveSimple()
+    {
+        Vector2 dir = inputHandler.MoveInput.normalized;
+
+        if (dir.sqrMagnitude < 0.01f) return;
+        Vector3 move = new Vector3(dir.x, 0, dir.y) * moveSpeed * Time.fixedDeltaTime;
+        rigidbody.MovePosition(transform.position + move);
+    }
+
+    private void MoveWithAcceleration()
+    {
+        Vector2 dir = inputHandler.MoveInput;
+        Vector3 targetDirection = new Vector3(dir.x, 0, dir.y);
+
+        if (dir.sqrMagnitude > 0.01f)
+        {
+            // 대각선 이동 정규화
+            if (targetDirection.sqrMagnitude > 1f)
+                targetDirection.Normalize();
+
+            // 목표 속도
+            Vector3 targetVelocity = targetDirection * moveSpeed;
+
+            // 가속
+            currentVelocity = Vector3.MoveTowards(
+                currentVelocity,
+                targetVelocity,
+                acceleration * Time.fixedDeltaTime
+            );
+        }
+        else
+        {
+            // 감속
+            currentVelocity = Vector3.MoveTowards(
+                currentVelocity,
+                Vector3.zero,
+                deceleration * Time.fixedDeltaTime
+            );
+        }
+
+        // 이동
+        if (currentVelocity.sqrMagnitude > 0.001f)
+        {
+            Vector3 move = currentVelocity * Time.fixedDeltaTime;
+            rigidbody.MovePosition(rigidbody.position + move);
+        }
+    }
+}
