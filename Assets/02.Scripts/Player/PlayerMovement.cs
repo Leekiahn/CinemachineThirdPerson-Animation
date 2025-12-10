@@ -6,13 +6,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidbody;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-    public float acceleration = 10f;
-    public float deceleration = 15f;
-
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
     private Vector3 currentVelocity;
-
     public bool useAcceleration = true;
+
+
 
     private void Awake()
     {
