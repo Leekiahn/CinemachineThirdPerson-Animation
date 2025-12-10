@@ -36,14 +36,21 @@ public class PlayerMovement : MonoBehaviour
         Vector2 dir = inputHandler.MoveInput.normalized;
 
         if (dir.sqrMagnitude < 0.01f) return;
-        Vector3 move = new Vector3(dir.x, 0, dir.y) * moveSpeed * Time.fixedDeltaTime;
+
+        Vector3 targetDirection = (transform.forward * dir.y + transform.right * dir.x);
+
+        // 대각선 이동 정규화
+        if (targetDirection.sqrMagnitude > 1f)
+            targetDirection.Normalize();
+
+        Vector3 move = targetDirection * moveSpeed * Time.fixedDeltaTime;
         rigidbody.MovePosition(transform.position + move);
     }
 
     private void MoveWithAcceleration()
     {
         Vector2 dir = inputHandler.MoveInput;
-        Vector3 targetDirection = new Vector3(dir.x, 0, dir.y);
+        Vector3 targetDirection = (transform.forward * dir.y + transform.right * dir.x);
 
         if (dir.sqrMagnitude > 0.01f)
         {
