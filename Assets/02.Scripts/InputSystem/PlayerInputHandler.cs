@@ -10,7 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     public Vector2 LookInput { get; private set; }
     public float ScrollInput { get; private set; }
     public bool SprintInput { get; private set; }
-    public bool JumpInput { get; set; }
+    public bool DiveRollInput { get; private set; }
     public bool CrouchInput { get; private set; }
 
     private void Awake()
@@ -26,8 +26,8 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Sprint.canceled += OnSprintCanceled;
 
         // ¡°«¡ ¿Ã∫•∆Æ
-        inputAction.Player.Jump.started += OnJumpStarted;
-        inputAction.Player.Jump.canceled += OnJumpCanceled;
+        inputAction.Player.DiveRoll.started += OnDiveRollStarted;
+        inputAction.Player.DiveRoll.canceled += OnDiveRollCanceled;
 
         //¡‹¿Œ/¡‹æ∆øÙ ¿Ã∫•∆Æ
         inputAction.Player.Zoom.performed += OnScrollPerformed;
@@ -73,14 +73,14 @@ public class PlayerInputHandler : MonoBehaviour
         SprintInput = false;
     }
 
-    private void OnJumpStarted(InputAction.CallbackContext context)
+    private void OnDiveRollStarted(InputAction.CallbackContext context)
     {
-        JumpInput = true;
+        DiveRollInput = true;
     }
 
-    private void OnJumpCanceled(InputAction.CallbackContext context)
+    private void OnDiveRollCanceled(InputAction.CallbackContext context)
     {
-        JumpInput = false;
+        DiveRollInput = false;
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
