@@ -1,10 +1,9 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInputHandler))]
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInputHandler inputHandler;
-    private CapsuleCollider capsuleCollider;
     private new Rigidbody rigidbody;
 
     [Header("Movement Settings")]
@@ -18,30 +17,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private Vector3 currentVelocity;
 
-    [Header("Crouch Settings")]
-    private float standingHeight;
-    private float crouchHeight;
-    private float crouchSpeed;
-    private float targetHeight;
-
-
-
     private void Awake()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
         rigidbody = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
-
-        standingHeight = capsuleCollider.height;
-        crouchHeight = standingHeight / 2f;
-        targetHeight = standingHeight;
     }
 
     private void FixedUpdate()
     {
         MoveWithAcceleration();
         Jump();
-        Crouch();
     }
 
     /// <summary>
@@ -134,14 +119,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //지면 체크 로직
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-    }
-
-    private void Crouch()
-    {
-        if (!inputHandler.CrouchInput || !IsGrounded()) return;
-
-        //웅크리기 로직
-        capsuleCollider.height = crouchHeight;
     }
 
     private void OnDrawGizmos()

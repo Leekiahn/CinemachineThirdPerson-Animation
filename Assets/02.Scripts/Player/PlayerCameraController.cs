@@ -1,6 +1,8 @@
 using Unity.Cinemachine;
+using Unity.Mathematics;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerCameraController : MonoBehaviour
 {
     private PlayerInputHandler inputHandler;
@@ -52,6 +54,9 @@ public class PlayerCameraController : MonoBehaviour
         HandleZoom();
     }
 
+    /// <summary>
+    /// 카메라 회전
+    /// </summary>
     private void RotateCamera()
     {
         if(cameraRoot == null) return;
@@ -63,11 +68,17 @@ public class PlayerCameraController : MonoBehaviour
         cameraRoot.rotation = Quaternion.Euler(rotationX, rotationY, 0f);
     }
 
+    /// <summary>
+    /// 플레이어 회전
+    /// </summary>
     private void RotatePlayer()
     {
         transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
     }
 
+    /// <summary>
+    /// 줌인/아웃 처리
+    /// </summary>
     private void HandleZoom()
     {
         if (cinemachineThirdPersonFollow == null) return;

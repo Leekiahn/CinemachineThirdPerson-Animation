@@ -28,10 +28,6 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Jump.started += OnJumpStarted;
         inputAction.Player.Jump.canceled += OnJumpCanceled;
 
-        // 웅크리기 이벤트
-        inputAction.Player.Crouch.performed += OnCrouchPerformed;
-        inputAction.Player.Crouch.canceled += OnCrouchCanceled;
-
         //시점 이벤트
         inputAction.Player.Look.performed += OnLookPerformed;
         inputAction.Player.Look.canceled += OnLookCanceled;
@@ -80,16 +76,6 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnJumpCanceled(InputAction.CallbackContext context)
     {
         JumpInput = false;
-    }
-
-    private void OnCrouchPerformed(InputAction.CallbackContext context)
-    {
-        CrouchInput = true;
-    }
-
-    private void OnCrouchCanceled(InputAction.CallbackContext context)
-    {
-        CrouchInput = false;
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
