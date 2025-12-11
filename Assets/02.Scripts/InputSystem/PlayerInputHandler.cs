@@ -55,13 +55,11 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnSprintPerformed(InputAction.CallbackContext context)
     {
         SprintInput = true;
-        Debug.Log("Sprint performed");
     }
 
     private void OnSprintCanceled(InputAction.CallbackContext context)
     {
         SprintInput = false;
-        Debug.Log("Sprint canceled");
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)

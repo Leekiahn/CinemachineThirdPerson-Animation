@@ -603,8 +603,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  acceleration: 20
-  deceleration: 20
+  additionalSprintSpeed: 3
+  acceleration: 30
+  deceleration: 30
   useAcceleration: 1
 --- !u!114 &1436611627
 MonoBehaviour:

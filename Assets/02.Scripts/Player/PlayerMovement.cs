@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
     private Vector3 currentVelocity;
-    private float currentSpeed;
-    public bool useAcceleration = true;
 
     private void Awake()
     {
@@ -23,16 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Sprint();
-
-        if (useAcceleration)
-        {
-            MoveWithAcceleration();
-        }
-        else
-        {
-            MoveSimple();
-        }
+        MoveWithAcceleration();
     }
 
     /// <summary>
@@ -50,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         if (targetDirection.sqrMagnitude > 1f)
             targetDirection.Normalize();
 
-        Vector3 move = targetDirection * currentSpeed * Time.fixedDeltaTime;
+        Vector3 move = targetDirection * CurrentSpeed() * Time.fixedDeltaTime;
         rigidbody.MovePosition(transform.position + move);
     }
 
@@ -69,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
                 targetDirection.Normalize();
 
             // 목표 속도
-            Vector3 targetVelocity = targetDirection * currentSpeed;
+            Vector3 targetVelocity = targetDirection * CurrentSpeed();
 
             // 가속
             currentVelocity = Vector3.MoveTowards(
@@ -96,15 +85,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Sprint()
+    /// <summary>
+    /// 현재 이동 속도 계산
+    /// </summary>
+    /// <returns>기본 이동 속도 또는 달리기 속도</returns>
+    private float CurrentSpeed()
     {
-        if (inputHandler.SprintInput)
-        {
-            currentSpeed = moveSpeed + additionalSprintSpeed;
-        }
-        else 
-        {
-            currentSpeed = moveSpeed;
-        }
+        return inputHandler.SprintInput ? moveSpeed + additionalSprintSpeed : moveSpeed;
     }
 }
