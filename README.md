@@ -6,12 +6,13 @@
 
 ### 🎮 입력 시스템
 - Unity Input System 기반 입력 관리
-- 이동, 점프, 스프린트, 시점 회전, 줌 입력 처리
+- 이동, 다이브롤, 스프린트, 시점 회전, 줌 입력 처리
 
 ### 🏃 플레이어 이동
-- 가속/감속 기반 부드러운 이동
+- Root Motion 기반 물리 이동
+- 부드러운 블렌드 애니메이션
 - 스프린트 기능
-- 점프 및 착지 감지
+- 다이브롤 기능
 
 ### 📷 카메라 컨트롤
 - Cinemachine 기반 3인칭 카메라
@@ -19,24 +20,34 @@
 - 줌 인/아웃 기능
 
 ### 🎭 애니메이션
+- Root Motion 기반 애니메이션
 - 이동 방향별 블렌드 애니메이션
-- 점프/착지 애니메이션
-- 스프린트 애니메이션
+- 다이브롤 애니메이션
+- 착지 애니메이션
+- 지면 감지 시스템
+
+### 🔊 사운드 시스템
+- 걷기/달리기 발자국 소리 (랜덤 재생)
+- 다이브롤 효과음 및 음성
+- 착지 효과음 및 음성
+- 애니메이션 이벤트 기반 사운드 재생
 
 ## 🛠️ 기술 스택
 - Unity 2022.3 LTS
 - C# 9.0 / .NET Framework 4.7.1
 - Unity Input System
 - Cinemachine
+- Root Motion Animation
+- Physics-based Movement (Rigidbody)
 
 ## 🎮 조작법
 - **WASD**: 이동
 - **Shift**: 스프린트
-- **Space**: 점프
+- **Space**: 다이브롤
 - **Mouse**: 시점 회전
 - **Mouse Wheel**: 줌
 
-## 📂 프로젝트 구조
+## 📂 프로젝트 구조  
 Player GameObject  
 ├── PlayerInputHandler (입력 관리)  
 ├── PlayerMovement (이동 처리)  
