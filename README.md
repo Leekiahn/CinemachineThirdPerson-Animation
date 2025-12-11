@@ -38,11 +38,8 @@
 
 ## 📂 프로젝트 구조
 Player GameObject 
-├── PlayerInputHandler (입력 관리) 
-├── PlayerMovement (이동 처리) 
-├── PlayerCameraController (카메라 제어) 
-├── PlayerAnimationController (애니메이션 제어) 
+├── PlayerInputHandler (입력 관리)  
+├── PlayerMovement (이동 처리)  
+├── PlayerCameraController (카메라 제어)  
+├── PlayerAnimationController (애니메이션 제어)  
 ├── Rigidbody (물리) └── Animator (애니메이션)  
-
-
-
