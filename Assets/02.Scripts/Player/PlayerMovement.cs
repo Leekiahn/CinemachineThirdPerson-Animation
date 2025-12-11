@@ -1,27 +1,31 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInputHandler inputHandler;
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float additionalSprintSpeed;
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
     private Vector3 currentVelocity;
+    private float currentSpeed;
     public bool useAcceleration = true;
-
-
 
     private void Awake()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
         rigidbody = GetComponent<Rigidbody>();
     }
+
     private void FixedUpdate()
     {
-        if(useAcceleration)
+        Sprint();
+
+        if (useAcceleration)
         {
             MoveWithAcceleration();
         }
@@ -31,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 단순 이동
+    /// </summary>
     private void MoveSimple()
     {
         Vector2 dir = inputHandler.MoveInput.normalized;
@@ -43,10 +50,13 @@ public class PlayerMovement : MonoBehaviour
         if (targetDirection.sqrMagnitude > 1f)
             targetDirection.Normalize();
 
-        Vector3 move = targetDirection * moveSpeed * Time.fixedDeltaTime;
+        Vector3 move = targetDirection * currentSpeed * Time.fixedDeltaTime;
         rigidbody.MovePosition(transform.position + move);
     }
 
+    /// <summary>
+    /// 가속도를 이용한 이동
+    /// </summary>
     private void MoveWithAcceleration()
     {
         Vector2 dir = inputHandler.MoveInput;
@@ -59,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 targetDirection.Normalize();
 
             // 목표 속도
-            Vector3 targetVelocity = targetDirection * moveSpeed;
+            Vector3 targetVelocity = targetDirection * currentSpeed;
 
             // 가속
             currentVelocity = Vector3.MoveTowards(
@@ -83,6 +93,18 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 move = currentVelocity * Time.fixedDeltaTime;
             rigidbody.MovePosition(rigidbody.position + move);
+        }
+    }
+
+    private void Sprint()
+    {
+        if (inputHandler.SprintInput)
+        {
+            currentSpeed = moveSpeed + additionalSprintSpeed;
+        }
+        else 
+        {
+            currentSpeed = moveSpeed;
         }
     }
 }
