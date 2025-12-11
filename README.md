@@ -37,7 +37,7 @@
 - **Mouse Wheel**: 줌
 
 ## 📂 프로젝트 구조
-Player GameObject 
+Player GameObject  
 ├── PlayerInputHandler (입력 관리)  
 ├── PlayerMovement (이동 처리)  
 ├── PlayerCameraController (카메라 제어)  
