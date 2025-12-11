@@ -9,6 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool SprintInput { get; private set; }
+    public bool JumpInput { get; set; }
 
     private void Awake()
     {
@@ -21,6 +22,9 @@ public class PlayerInputHandler : MonoBehaviour
         // Sprint 이벤트
         inputAction.Player.Sprint.performed += OnSprintPerformed;
         inputAction.Player.Sprint.canceled += OnSprintCanceled;
+
+        inputAction.Player.Jump.started += OnJumpStarted;
+        inputAction.Player.Jump.canceled += OnJumpCanceled;
 
         //시점 이벤트
         inputAction.Player.Look.performed += OnLookPerformed;
@@ -60,6 +64,16 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnSprintCanceled(InputAction.CallbackContext context)
     {
         SprintInput = false;
+    }
+
+    private void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        JumpInput = true;
+    }
+
+    private void OnJumpCanceled(InputAction.CallbackContext context)
+    {
+        JumpInput = false;
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)

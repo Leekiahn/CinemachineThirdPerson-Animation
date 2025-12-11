@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float additionalSprintSpeed;
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance;
+    [SerializeField] private LayerMask groundLayer;
     private Vector3 currentVelocity;
 
     private void Awake()
@@ -22,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MoveWithAcceleration();
+        Jump();
     }
 
     /// <summary>
@@ -92,5 +97,35 @@ public class PlayerMovement : MonoBehaviour
     private float CurrentSpeed()
     {
         return inputHandler.SprintInput ? moveSpeed + additionalSprintSpeed : moveSpeed;
+    }
+
+    /// <summary>
+    /// 점프 처리
+    /// </summary>
+    private void Jump()
+    {
+        if(!inputHandler.JumpInput || !IsGrounded()) return;
+
+        //점프 로직
+        rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        inputHandler.JumpInput = false;
+    }
+
+    /// <summary>
+    /// 지면 체크
+    /// </summary>
+    /// <returns>지면에 닿아있는지 bool값 반환</returns>
+    private bool IsGrounded()
+    {
+        //지면 체크 로직
+        return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (groundCheck == null) return;
+
+        Gizmos.color = IsGrounded() ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 }

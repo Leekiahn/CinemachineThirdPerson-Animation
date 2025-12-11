@@ -8,6 +8,9 @@ public class PlayerCameraController : MonoBehaviour
     [Header("Look Settings")]
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private Transform cameraPosition;
+    [SerializeField] private float minYAngle;
+    [SerializeField] private float maxYAngle;
+    private float currentYRotation;
 
 
     private void Awake()
@@ -29,7 +32,10 @@ public class PlayerCameraController : MonoBehaviour
         float mouseX = lookInput.x * mouseSensitivity;
         float mouseY = lookInput.y * mouseSensitivity;
 
+        currentYRotation -= mouseY;
+        currentYRotation = Mathf.Clamp(currentYRotation, minYAngle, maxYAngle);
+
         transform.Rotate(Vector3.up, mouseX);
-        cameraPosition.Rotate(Vector3.right, -mouseY);
+        cameraPosition.localRotation = Quaternion.Euler(currentYRotation, 0f, 0f);
     }
 }
