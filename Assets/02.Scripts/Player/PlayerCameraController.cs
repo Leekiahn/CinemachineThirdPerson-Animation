@@ -23,12 +23,9 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private float minZoomDistance;
     [SerializeField] private float maxZoomDistance;
 
-
     private float rotationX;
     private float rotationY;
     private float targetZoomDistance;
-
-
 
     private void Awake()
     {
@@ -83,11 +80,11 @@ public class PlayerCameraController : MonoBehaviour
     {
         if (cinemachineThirdPersonFollow == null) return;
 
-        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = inputHandler.ScrollInput;
 
-        if (scrollInput != 0f)
+        if (scroll != 0f)
         {
-            targetZoomDistance -= scrollInput * zoomSpeed;
+            targetZoomDistance -= scroll * zoomSpeed;
             targetZoomDistance = Mathf.Clamp(
                 targetZoomDistance,
                 minZoomDistance,  // 최소 거리

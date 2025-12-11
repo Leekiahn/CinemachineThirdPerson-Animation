@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        if(!inputHandler.JumpInput || !IsGrounded()) return;
+        if (!inputHandler.JumpInput || !IsGrounded()) return;
 
         //점프 로직
         rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
     /// 지면 체크
     /// </summary>
     /// <returns>지면에 닿아있는지 bool값 반환</returns>
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         //지면 체크 로직
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
