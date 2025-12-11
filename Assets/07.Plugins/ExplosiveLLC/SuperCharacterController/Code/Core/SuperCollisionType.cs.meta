@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 74d84d9e4eadd1b4fb51d660e4c4666f
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65284
+  packageName: RPG Character Mecanim Animation Pack FREE
+  packageVersion: 2.5.2
+  assetPath: Assets/ExplosiveLLC/SuperCharacterController/Code/Core/SuperCollisionType.cs
+  uploadId: 754614

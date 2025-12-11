@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 4bd925d5f09f5b04cbc303d0857fc6f7
+timeCreated: 1427671951
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65284
+  packageName: RPG Character Mecanim Animation Pack FREE
+  packageVersion: 2.5.2
+  assetPath: Assets/ExplosiveLLC/SuperCharacterController/Code/Examples/PlayerCamera.cs
+  uploadId: 754614

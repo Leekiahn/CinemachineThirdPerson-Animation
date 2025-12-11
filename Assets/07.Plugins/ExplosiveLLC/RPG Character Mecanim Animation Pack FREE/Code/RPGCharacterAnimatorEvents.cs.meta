@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 38b1102f22fc321439f751cf9d89d20e
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65284
+  packageName: RPG Character Mecanim Animation Pack FREE
+  packageVersion: 2.5.2
+  assetPath: Assets/ExplosiveLLC/RPG Character Mecanim Animation Pack FREE/Code/RPGCharacterAnimatorEvents.cs
+  uploadId: 754614

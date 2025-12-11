@@ -43,13 +43,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "09ae3242-1d43-47a9-af8b-7879c79445e1",
-                    "expectedControlType": "",
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "0cb5f654-a140-4627-8ad3-3a157474e6fc",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -143,12 +143,12 @@
                 },
                 {
                     "name": "",
-                    "id": "836768c5-8366-4b8b-9dcf-1856162bf36e",
-                    "path": "<Keyboard>/leftCtrl",
+                    "id": "e2ec41f4-187d-40de-ad44-973c583c530f",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

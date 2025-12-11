@@ -8,6 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
+    public float ScrollInput { get; private set; }
     public bool SprintInput { get; private set; }
     public bool JumpInput { get; set; }
     public bool CrouchInput { get; private set; }
@@ -28,9 +29,9 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Jump.started += OnJumpStarted;
         inputAction.Player.Jump.canceled += OnJumpCanceled;
 
-        // øı≈©∏Æ±‚ ¿Ã∫•∆Æ
-        inputAction.Player.Crouch.performed += OnCrouchPerformed;
-        inputAction.Player.Crouch.canceled += OnCrouchCanceled;
+        //¡‹¿Œ/¡‹æ∆øÙ ¿Ã∫•∆Æ
+        inputAction.Player.Zoom.performed += OnScrollPerformed;
+        inputAction.Player.Zoom.canceled += OnScrollCanceled;
 
         //Ω√¡° ¿Ã∫•∆Æ
         inputAction.Player.Look.performed += OnLookPerformed;
@@ -82,16 +83,6 @@ public class PlayerInputHandler : MonoBehaviour
         JumpInput = false;
     }
 
-    private void OnCrouchPerformed(InputAction.CallbackContext context)
-    {
-        CrouchInput = true;
-    }
-
-    private void OnCrouchCanceled(InputAction.CallbackContext context)
-    {
-        CrouchInput = false;
-    }
-
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
         LookInput = context.ReadValue<Vector2>();
@@ -101,4 +92,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         LookInput = Vector2.zero;
     }
+
+    private void OnScrollPerformed(InputAction.CallbackContext context)
+    {
+        Vector2 scrollValue = context.ReadValue<Vector2>();
+        ScrollInput = scrollValue.y;
+    }
+
+    private void OnScrollCanceled(InputAction.CallbackContext context)
+    {
+        ScrollInput = 0f;
+    }
+
 }
