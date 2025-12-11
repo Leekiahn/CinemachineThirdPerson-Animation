@@ -32,23 +32,18 @@ public class PlayerRootMotionController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         animator.SetFloat(hashMoveX, inputHandler.MoveInput.x, smoothDampTime, Time.deltaTime);
         animator.SetFloat(hashMoveY, inputHandler.MoveInput.y, smoothDampTime, Time.deltaTime);
         animator.SetBool(hashIsSprinting, inputHandler.SprintInput);
 
-        if(inputHandler.DiveRollInput && IsGrounded() && !hasDiveRolled)
+        if (inputHandler.DiveRollInput && IsGrounded() && !hasDiveRolled)
         {
             animator.SetTrigger(hashDiveRoll);
             hasDiveRolled = true;
         }
-        if(!inputHandler.DiveRollInput)
+        if (!inputHandler.DiveRollInput)
         {
             hasDiveRolled = false;
         }
@@ -82,16 +77,13 @@ public class PlayerRootMotionController : MonoBehaviour
 
     private void OnDiveRollFootStep()
     {
-        if (IsGrounded())
-        {
-            int index = Random.Range(0, DiveRollFootStepSound.Length);
-            audioSource.PlayOneShot(DiveRollFootStepSound[index]);
-        }
+        int index = Random.Range(0, DiveRollFootStepSound.Length);
+        audioSource.PlayOneShot(DiveRollFootStepSound[index]);
     }
 
     private void OnDiveRollVoice()
     {
-        if(IsGrounded())
+        if (IsGrounded())
         {
             int index = Random.Range(0, DiveRollVoice.Length);
             audioSource.PlayOneShot(DiveRollVoice[index]);
