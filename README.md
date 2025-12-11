@@ -1,6 +1,5 @@
 # CinemachineThirdPerson & Animation
 ## 🎥 데모 영상
-[![프로젝트 데모](https://img.youtube.com/vi/SvJ4OtsqqB4/maxresdefault.jpg)](https://youtu.be/SvJ4OtsqqB4)
 
 ## ✨ 구현 기능
 
