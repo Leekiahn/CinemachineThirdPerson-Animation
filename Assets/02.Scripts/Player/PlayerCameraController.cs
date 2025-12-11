@@ -41,6 +41,8 @@ public class PlayerCameraController : MonoBehaviour
         Vector3 currentRotation = cameraRoot.eulerAngles;
         rotationX = currentRotation.x;
         rotationY = currentRotation.y;
+
+        targetZoomDistance = minZoomDistance;
     }
 
     private void LateUpdate()

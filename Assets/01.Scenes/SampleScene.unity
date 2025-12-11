@@ -632,7 +632,7 @@ MonoBehaviour:
   maxVerticalAngle: 70
   cinemachineThirdPersonFollow: {fileID: 1530687294}
   zoomSpeed: 10
-  minZoomDistance: 2
+  minZoomDistance: 5
   maxZoomDistance: 20
 --- !u!33 &1436611628
 MeshFilter:
