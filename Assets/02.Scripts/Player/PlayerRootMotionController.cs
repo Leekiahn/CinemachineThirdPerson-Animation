@@ -4,20 +4,24 @@ public class PlayerRootMotionController : MonoBehaviour
 {
     private PlayerInputHandler inputHandler;
     private Animator animator;
-    private new Rigidbody rigidbody;
     private AudioSource audioSource;
-    private float smoothDampTime = 0.1f;
+
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundDistance;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private AudioClip[] walkFootStepSound;
     [SerializeField] private AudioClip[] SprintFootStepSound;
+    [SerializeField] private AudioClip[] DiveRollFootStepSound;
+    [SerializeField] private AudioClip[] DiveRollVoice;
+    [SerializeField] private AudioClip[] LandVoice;
+    [SerializeField] private AudioClip[] LandFootStepSound;
 
     private readonly int hashMoveX = Animator.StringToHash("MoveX");
     private readonly int hashMoveY = Animator.StringToHash("MoveY");
     private readonly int hashIsSprinting = Animator.StringToHash("IsSprinting");
     private readonly int hashDiveRoll = Animator.StringToHash("DiveRoll");
     private readonly int hashIsGrounded = Animator.StringToHash("IsGrounded");
+    private float smoothDampTime = 0.1f;
 
     private bool hasDiveRolled = false;
 
@@ -25,7 +29,6 @@ public class PlayerRootMotionController : MonoBehaviour
     {
         inputHandler = GetComponent<PlayerInputHandler>();
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -54,13 +57,6 @@ public class PlayerRootMotionController : MonoBehaviour
         animator.SetBool(hashIsGrounded, IsGrounded());
     }
 
-    private void OnAnimatorMove()
-    {
-        Vector3 movement = animator.deltaPosition;
-
-        rigidbody.MovePosition(rigidbody.position + movement);
-    }
-
     private bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
@@ -82,5 +78,35 @@ public class PlayerRootMotionController : MonoBehaviour
             int index = Random.Range(0, SprintFootStepSound.Length);
             audioSource.PlayOneShot(SprintFootStepSound[index]);
         }
+    }
+
+    private void OnDiveRollFootStep()
+    {
+        if (IsGrounded())
+        {
+            int index = Random.Range(0, DiveRollFootStepSound.Length);
+            audioSource.PlayOneShot(DiveRollFootStepSound[index]);
+        }
+    }
+
+    private void OnDiveRollVoice()
+    {
+        if(IsGrounded())
+        {
+            int index = Random.Range(0, DiveRollVoice.Length);
+            audioSource.PlayOneShot(DiveRollVoice[index]);
+        }
+    }
+
+    private void OnLandFootStep()
+    {
+        int index = Random.Range(0, LandFootStepSound.Length);
+        audioSource.PlayOneShot(LandFootStepSound[index]);
+    }
+
+    private void OnLandVoice()
+    {
+        int index = Random.Range(0, LandVoice.Length);
+        audioSource.PlayOneShot(LandVoice[index]);
     }
 }
