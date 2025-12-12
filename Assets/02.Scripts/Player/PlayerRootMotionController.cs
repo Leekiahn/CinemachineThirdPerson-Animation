@@ -21,9 +21,12 @@ public class PlayerRootMotionController : MonoBehaviour
     private readonly int hashDiveRoll = Animator.StringToHash("DiveRoll");
     private readonly int hashIsGrounded = Animator.StringToHash("IsGrounded");
     private readonly int hashIsFalling = Animator.StringToHash("IsFalling");
+    private readonly int hashAttack = Animator.StringToHash("Attack");
+    private readonly int hashAttackIndex = Animator.StringToHash("AttackIndex");
 
     // 다이브 롤 중복 방지 변수
     private bool hasDiveRolled = false;
+    private bool hasAttacked = false;
 
     private void Awake()
     {
@@ -62,6 +65,17 @@ public class PlayerRootMotionController : MonoBehaviour
 
         // 지상 상태 처리
         animator.SetBool(hashIsGrounded, IsGrounded());
+
+        // 공격 입력 처리 (예시: AttackInput 추가 필요)
+        if (inputHandler.AttackInput && IsGrounded() && !hasAttacked)
+        {
+            animator.SetTrigger(hashAttack);
+            hasAttacked = true;
+        }
+        if (!inputHandler.AttackInput)
+        {
+            hasAttacked = false;
+        }
     }
 
     /// <summary>
@@ -113,5 +127,10 @@ public class PlayerRootMotionController : MonoBehaviour
     private void OnLandVoice()
     {
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.landVoice));
+    }
+
+    private void OnAttackVoice()
+    {
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.attackVoice));
     }
 }

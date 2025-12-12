@@ -42,3 +42,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f0b29d3032f31c74dbf99cffe3d221f4, type: 3}
   - {fileID: 8300000, guid: 4e3da559eb1b560489e5b8d7c91b703f, type: 3}
   - {fileID: 8300000, guid: 319c323b5c62fce43a0f77f046130edd, type: 3}
+  attackVoice:
+  - {fileID: 8300000, guid: 1ac2be35c2391fb4db663b57419e06d0, type: 3}
+  - {fileID: 8300000, guid: 0d605f23065c7bd4985b70fb5e9ec22d, type: 3}
+  - {fileID: 8300000, guid: b2bbe26d2b55a2941b1af113a4061cf8, type: 3}
+  - {fileID: 8300000, guid: b859b702508e2294ba14b521d9ad4b93, type: 3}
