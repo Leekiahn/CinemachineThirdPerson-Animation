@@ -168,6 +168,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3629075204623386966}
+  - component: {fileID: 672065556694973224}
+  - component: {fileID: 4233079449390940975}
   m_Layer: 0
   m_Name: B_R_Hand
   m_TagString: Untagged
@@ -195,6 +197,40 @@ Transform:
   - {fileID: 3825551950724669937}
   m_Father: {fileID: 8549670435131759493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &672065556694973224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425847398699802730}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.1, z: 0.2}
+  m_Center: {x: -0.1, y: 0, z: 0}
+--- !u!114 &4233079449390940975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425847398699802730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
 --- !u!1 &664525731113445364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,9 +1282,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.8
+  m_Height: 2.6
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 1.3, z: 0}
 --- !u!54 &371101704691003830
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1327,6 +1363,8 @@ MonoBehaviour:
   groundDistance: 0.2
   groundCheck: {fileID: 4863402579791104617}
   playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
+  leftHand: {fileID: 2175256822756766197}
+  rightHand: {fileID: 4233079449390940975}
 --- !u!82 &1697981984897648064
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1753,6 +1791,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1084392909971694711}
+  - component: {fileID: 5250283580414306410}
+  - component: {fileID: 2175256822756766197}
   m_Layer: 0
   m_Name: B_L_Hand
   m_TagString: Untagged
@@ -1780,6 +1820,40 @@ Transform:
   - {fileID: 8665065835534086034}
   m_Father: {fileID: 5773074010246141009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5250283580414306410
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201168342241243036}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.1, z: 0.2}
+  m_Center: {x: -0.1, y: 0, z: 0}
+--- !u!114 &2175256822756766197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201168342241243036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
 --- !u!1 &7439106086733548860
 GameObject:
   m_ObjectHideFlags: 0

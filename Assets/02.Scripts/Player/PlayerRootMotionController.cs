@@ -26,7 +26,6 @@ public class PlayerRootMotionController : MonoBehaviour
     private readonly int hashIsGrounded = Animator.StringToHash("IsGrounded");
     private readonly int hashIsFalling = Animator.StringToHash("IsFalling");
     private readonly int hashAttack = Animator.StringToHash("Attack");
-    private readonly int hashAttackIndex = Animator.StringToHash("AttackIndex");
 
     // 다이브 롤 중복 방지 변수
     private bool hasDiveRolled = false;
