@@ -1,0 +1,22 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "PlayerAudioData", menuName = "Scriptable Object/Player/Audio Data")]
+public class PlayerAudioData : ScriptableObject
+{
+    [Header("FootStep Sounds")]
+    public AudioClip[] walkFootStepSound;
+    public AudioClip[] sprintFootStepSound;
+    public AudioClip[] diveRollFootStepSound;
+    public AudioClip[] landFootStepSound;
+
+    [Header("Voice Sounds")]
+    public AudioClip[] diveRollVoice;
+    public AudioClip[] landVoice;
+
+    public AudioClip GetRandomClip(AudioClip[] clips)
+    {
+        if (clips == null || clips.Length == 0) return null;
+        int randomIndex = Random.Range(0, clips.Length);
+        return clips[randomIndex];
+    }
+}
