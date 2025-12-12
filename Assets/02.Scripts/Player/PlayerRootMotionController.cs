@@ -14,6 +14,10 @@ public class PlayerRootMotionController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private PlayerAudioData playerAudioData;
 
+    [Header("Attack Settings")]
+    [SerializeField] private PlayerAttack leftHand;
+    [SerializeField] private PlayerAttack rightHand;
+
     // 애니메이터 해시
     private readonly int hashMoveX = Animator.StringToHash("MoveX");
     private readonly int hashMoveY = Animator.StringToHash("MoveY");
@@ -87,6 +91,9 @@ public class PlayerRootMotionController : MonoBehaviour
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
     }
 
+    /// <summary>
+    /// 애니메이션 사운드 재생 함수들
+    /// </summary>
     private void OnWalkFootStep()
     {
         if (inputHandler.MoveInput.magnitude > 0.1f && IsGrounded())
@@ -132,5 +139,31 @@ public class PlayerRootMotionController : MonoBehaviour
     private void OnAttackVoice()
     {
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.attackVoice));
+    }
+
+    /// <summary>
+    /// 왼쪽 손 공격 판정 활성화 Animation Event
+    /// </summary>
+    private void OnEnableLeftHandAttack()
+    {
+        leftHand.EnableAttack();
+    }
+
+    private void OnDisableLeftHandAttack()
+    {
+        leftHand.DisableAttack();
+    }
+
+    /// <summary>
+    /// 오른쪽 손 공격 판정 활성화 Animation Event
+    /// </summary>
+    private void OnEnableRightHandAttack()
+    {
+        rightHand.EnableAttack();
+    }
+
+    private void OnDisableRightHandAttack()
+    {
+        rightHand.DisableAttack();
     }
 }
