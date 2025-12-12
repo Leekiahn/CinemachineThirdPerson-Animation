@@ -12,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool SprintInput { get; private set; }
     public bool DiveRollInput { get; private set; }
     public bool CrouchInput { get; private set; }
+    public bool AttackInput { get; private set; }
 
     private void Awake()
     {
@@ -36,6 +37,10 @@ public class PlayerInputHandler : MonoBehaviour
         //시점 이벤트
         inputAction.Player.Look.performed += OnLookPerformed;
         inputAction.Player.Look.canceled += OnLookCanceled;
+
+        //공격 이벤트
+        inputAction.Player.Attack.performed += OnAttackPerformed;
+        inputAction.Player.Attack.canceled += OnAttackCanceled;
     }
 
     private void OnEnable()
@@ -102,6 +107,16 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnScrollCanceled(InputAction.CallbackContext context)
     {
         ScrollInput = 0f;
+    }
+
+    private void OnAttackPerformed(InputAction.CallbackContext context)
+    {
+        AttackInput = true;
+    }
+
+    private void OnAttackCanceled(InputAction.CallbackContext context)
+    {
+        AttackInput = false;
     }
 
 }

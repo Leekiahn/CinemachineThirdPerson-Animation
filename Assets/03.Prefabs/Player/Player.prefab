@@ -168,6 +168,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3629075204623386966}
+  - component: {fileID: 672065556694973224}
+  - component: {fileID: 4233079449390940975}
   m_Layer: 0
   m_Name: B_R_Hand
   m_TagString: Untagged
@@ -195,6 +197,40 @@ Transform:
   - {fileID: 3825551950724669937}
   m_Father: {fileID: 8549670435131759493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &672065556694973224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425847398699802730}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.1, z: 0.2}
+  m_Center: {x: -0.1, y: 0, z: 0}
+--- !u!114 &4233079449390940975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425847398699802730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
 --- !u!1 &664525731113445364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,9 +1282,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.8
+  m_Height: 2.6
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 1.3, z: 0}
 --- !u!54 &371101704691003830
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1305,7 +1341,7 @@ MonoBehaviour:
   minVerticalAngle: -40
   maxVerticalAngle: 70
   cinemachineThirdPersonFollow: {fileID: 0}
-  zoomSpeed: 60
+  zoomSpeed: 3
   minZoomDistance: 5
   maxZoomDistance: 15
 --- !u!114 &5457989233048031200
@@ -1320,41 +1356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43da7b8ad1388934ca9accf4fb82c325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothDampTime: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   groundDistance: 0.2
   groundCheck: {fileID: 4863402579791104617}
-  walkFootStepSound:
-  - {fileID: 8300000, guid: 1f0199a4c6005ec4abbb302f71bc036d, type: 3}
-  - {fileID: 8300000, guid: 53e2adf2ac488ef46bb2b4074de9e363, type: 3}
-  - {fileID: 8300000, guid: a03a96c5d1e99b4409ddd79098abd9ab, type: 3}
-  - {fileID: 8300000, guid: 7187dc81f98b8be4eb97bfc4dd9a5abf, type: 3}
-  SprintFootStepSound:
-  - {fileID: 8300000, guid: ecd647025e0a3c04fbd5829fff509e09, type: 3}
-  - {fileID: 8300000, guid: 3bd1b93317b7a3a49b13011cdaa64d0b, type: 3}
-  - {fileID: 8300000, guid: 7b4b6eb734482064c8c1e5fd45d4d76c, type: 3}
-  - {fileID: 8300000, guid: fba95cafa5bba8649a7d269656e7317b, type: 3}
-  DiveRollFootStepSound:
-  - {fileID: 8300000, guid: 3d8f480d252db9449b2f978284506f8e, type: 3}
-  - {fileID: 8300000, guid: 79e6e1370ee1ca747b469e68d0dcb0fe, type: 3}
-  - {fileID: 8300000, guid: b796f7e3b1a4d7344b7ee8d6c077a68f, type: 3}
-  - {fileID: 8300000, guid: 1f080a1e65d584c4ca3e3c75fbb406b3, type: 3}
-  DiveRollVoice:
-  - {fileID: 8300000, guid: 70d21687156c5b84dbee279f3bb6086f, type: 3}
-  - {fileID: 8300000, guid: 3f3669dc2bf61434783f4934700e82f6, type: 3}
-  - {fileID: 8300000, guid: 592fe506ec079e94d8f1df5b5bd83edf, type: 3}
-  - {fileID: 8300000, guid: 55520881781472649ac612614a24f148, type: 3}
-  LandVoice:
-  - {fileID: 8300000, guid: 26c3c51fc9dc7624a86cb41f34d4f14b, type: 3}
-  - {fileID: 8300000, guid: f0b29d3032f31c74dbf99cffe3d221f4, type: 3}
-  - {fileID: 8300000, guid: 4e3da559eb1b560489e5b8d7c91b703f, type: 3}
-  - {fileID: 8300000, guid: 319c323b5c62fce43a0f77f046130edd, type: 3}
-  LandFootStepSound:
-  - {fileID: 8300000, guid: 3d8f480d252db9449b2f978284506f8e, type: 3}
-  - {fileID: 8300000, guid: 79e6e1370ee1ca747b469e68d0dcb0fe, type: 3}
-  - {fileID: 8300000, guid: b796f7e3b1a4d7344b7ee8d6c077a68f, type: 3}
-  - {fileID: 8300000, guid: 1f080a1e65d584c4ca3e3c75fbb406b3, type: 3}
+  playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
+  leftHand: {fileID: 2175256822756766197}
+  rightHand: {fileID: 4233079449390940975}
 --- !u!82 &1697981984897648064
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1781,6 +1791,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1084392909971694711}
+  - component: {fileID: 5250283580414306410}
+  - component: {fileID: 2175256822756766197}
   m_Layer: 0
   m_Name: B_L_Hand
   m_TagString: Untagged
@@ -1808,6 +1820,40 @@ Transform:
   - {fileID: 8665065835534086034}
   m_Father: {fileID: 5773074010246141009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5250283580414306410
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201168342241243036}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.1, z: 0.2}
+  m_Center: {x: -0.1, y: 0, z: 0}
+--- !u!114 &2175256822756766197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201168342241243036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
 --- !u!1 &7439106086733548860
 GameObject:
   m_ObjectHideFlags: 0

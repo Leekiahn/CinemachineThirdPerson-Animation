@@ -5,36 +5,38 @@ public class PlayerRootMotionController : MonoBehaviour
     private PlayerInputHandler inputHandler;
     private Animator animator;
     private AudioSource audioSource;
+    private new Rigidbody rigidbody;
 
+    [Header("Settings")]
+    [SerializeField] private float smoothDampTime;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundDistance;
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private AudioClip[] walkFootStepSound;
-    [SerializeField] private AudioClip[] SprintFootStepSound;
-    [SerializeField] private AudioClip[] DiveRollFootStepSound;
-    [SerializeField] private AudioClip[] DiveRollVoice;
-    [SerializeField] private AudioClip[] LandVoice;
-    [SerializeField] private AudioClip[] LandFootStepSound;
+    [SerializeField] private PlayerAudioData playerAudioData;
 
+    [Header("Attack Settings")]
+    [SerializeField] private PlayerAttack leftHand;
+    [SerializeField] private PlayerAttack rightHand;
+
+    // 애니메이터 해시
     private readonly int hashMoveX = Animator.StringToHash("MoveX");
     private readonly int hashMoveY = Animator.StringToHash("MoveY");
     private readonly int hashIsSprinting = Animator.StringToHash("IsSprinting");
     private readonly int hashDiveRoll = Animator.StringToHash("DiveRoll");
     private readonly int hashIsGrounded = Animator.StringToHash("IsGrounded");
-    private float smoothDampTime = 0.1f;
+    private readonly int hashIsFalling = Animator.StringToHash("IsFalling");
+    private readonly int hashAttack = Animator.StringToHash("Attack");
 
+    // 다이브 롤 중복 방지 변수
     private bool hasDiveRolled = false;
+    private bool hasAttacked = false;
 
     private void Awake()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-    }
-
-    void Start()
-    {
-        
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -43,31 +45,59 @@ public class PlayerRootMotionController : MonoBehaviour
         animator.SetFloat(hashMoveY, inputHandler.MoveInput.y, smoothDampTime, Time.deltaTime);
         animator.SetBool(hashIsSprinting, inputHandler.SprintInput);
 
-        if(inputHandler.DiveRollInput && IsGrounded() && !hasDiveRolled)
+        // 다이브 롤 입력 처리
+        if (inputHandler.DiveRollInput && IsGrounded() && !hasDiveRolled)
         {
             animator.SetTrigger(hashDiveRoll);
             hasDiveRolled = true;
         }
-        if(!inputHandler.DiveRollInput)
+        if (!inputHandler.DiveRollInput)
         {
             hasDiveRolled = false;
         }
 
+        // 낙하 상태 처리
+        if (rigidbody.linearVelocity.y < -0.5f && !IsGrounded())
+        {
+            animator.SetBool(hashIsFalling, true);
+        }
+        else
+        {
+            animator.SetBool(hashIsFalling, false);
+        }
 
+        // 지상 상태 처리
         animator.SetBool(hashIsGrounded, IsGrounded());
+
+        // 공격 입력 처리 (예시: AttackInput 추가 필요)
+        if (inputHandler.AttackInput && IsGrounded() && !hasAttacked)
+        {
+            animator.SetTrigger(hashAttack);
+            hasAttacked = true;
+        }
+        if (!inputHandler.AttackInput)
+        {
+            hasAttacked = false;
+        }
     }
 
+    /// <summary>
+    /// 지면에 닿아있는지 확인
+    /// </summary>
+    /// <returns></returns>
     private bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
     }
 
+    /// <summary>
+    /// 애니메이션 사운드 재생 함수들
+    /// </summary>
     private void OnWalkFootStep()
     {
         if (inputHandler.MoveInput.magnitude > 0.1f && IsGrounded())
         {
-            int index = Random.Range(0, walkFootStepSound.Length);
-            audioSource.PlayOneShot(walkFootStepSound[index]);
+            audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.walkFootStepSound));
         }
     }
 
@@ -75,8 +105,7 @@ public class PlayerRootMotionController : MonoBehaviour
     {
         if (inputHandler.MoveInput.magnitude > 0.1f && IsGrounded())
         {
-            int index = Random.Range(0, SprintFootStepSound.Length);
-            audioSource.PlayOneShot(SprintFootStepSound[index]);
+            audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.sprintFootStepSound));
         }
     }
 
@@ -84,29 +113,56 @@ public class PlayerRootMotionController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            int index = Random.Range(0, DiveRollFootStepSound.Length);
-            audioSource.PlayOneShot(DiveRollFootStepSound[index]);
+            audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.diveRollFootStepSound));
         }
     }
 
     private void OnDiveRollVoice()
     {
-        if(IsGrounded())
+        if (IsGrounded())
         {
-            int index = Random.Range(0, DiveRollVoice.Length);
-            audioSource.PlayOneShot(DiveRollVoice[index]);
+            audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.diveRollVoice));
         }
     }
 
     private void OnLandFootStep()
     {
-        int index = Random.Range(0, LandFootStepSound.Length);
-        audioSource.PlayOneShot(LandFootStepSound[index]);
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.landFootStepSound));
     }
 
     private void OnLandVoice()
     {
-        int index = Random.Range(0, LandVoice.Length);
-        audioSource.PlayOneShot(LandVoice[index]);
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.landVoice));
+    }
+
+    private void OnAttackVoice()
+    {
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.attackVoice));
+    }
+
+    /// <summary>
+    /// 왼쪽 손 공격 판정 활성화 Animation Event
+    /// </summary>
+    private void OnEnableLeftHandAttack()
+    {
+        leftHand.EnableAttack();
+    }
+
+    private void OnDisableLeftHandAttack()
+    {
+        leftHand.DisableAttack();
+    }
+
+    /// <summary>
+    /// 오른쪽 손 공격 판정 활성화 Animation Event
+    /// </summary>
+    private void OnEnableRightHandAttack()
+    {
+        rightHand.EnableAttack();
+    }
+
+    private void OnDisableRightHandAttack()
+    {
+        rightHand.DisableAttack();
     }
 }
