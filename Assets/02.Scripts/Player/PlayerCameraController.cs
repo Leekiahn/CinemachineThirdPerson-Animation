@@ -1,5 +1,4 @@
 using Unity.Cinemachine;
-using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandler))]

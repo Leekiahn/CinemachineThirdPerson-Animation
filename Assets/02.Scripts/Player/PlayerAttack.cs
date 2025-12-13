@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public PlayerStatsData playerStatsData;
+    private AudioSource audioSource;
     private Collider attackCollider;
+
+    public PlayerStatsData playerStatsData;
+    public PlayerAudioData playerAudioData;
+
+    [SerializeField] private GameObject attackEffect;
 
     private void Awake()
     {
         attackCollider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
         if (attackCollider != null)
         {
             attackCollider.enabled = false; // 초기에는 비활성화
@@ -44,6 +50,12 @@ public class PlayerAttack : MonoBehaviour
             // TODO: Enemy에게 실제 데미지 전달
             // var enemy = other.GetComponent<Enemy>();
             // if (enemy != null) enemy.TakeDamage(playerStatsData.attackDamage);
+
+            GameObject effect = Instantiate(attackEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 1f); // 이펙트 오브젝트 파괴
+
+            AudioClip hitClip = playerAudioData.GetRandomClip(playerAudioData.hitEnemySound);
+            audioSource.PlayOneShot(hitClip);
         }
     }
 }

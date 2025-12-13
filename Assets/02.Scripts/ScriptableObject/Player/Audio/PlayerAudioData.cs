@@ -8,6 +8,7 @@ public class PlayerAudioData : ScriptableObject
     public AudioClip[] sprintFootStepSound;
     public AudioClip[] diveRollFootStepSound;
     public AudioClip[] landFootStepSound;
+    public AudioClip[] hitEnemySound;
 
     [Header("Voice Sounds")]
     public AudioClip[] diveRollVoice;
