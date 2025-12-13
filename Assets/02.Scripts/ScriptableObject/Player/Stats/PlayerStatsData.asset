@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1a341769792544988bcb2e36b62040, type: 3}
   m_Name: PlayerStatsData
   m_EditorClassIdentifier: 
-  attackDamage: 10
+  maxHealth: 100
+  attackDamage: 40

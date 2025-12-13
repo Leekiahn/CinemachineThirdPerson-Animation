@@ -1,46 +1,31 @@
 using UnityEngine;
 
-public class PlayerRootMotionController : MonoBehaviour
+/// <summary>
+/// 플레이어 Root Motion 애니메이션 컨트롤러
+/// </summary>
+public class PlayerRootMotionController : CharacterRootMotionController
 {
     private PlayerInputHandler inputHandler;
-    private Animator animator;
-    private AudioSource audioSource;
-    private new Rigidbody rigidbody;
 
-    [Header("Settings")]
-    [SerializeField] private float smoothDampTime;
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float groundDistance;
-    [SerializeField] private Transform groundCheck;
+    [Header("Player Audio")]
     [SerializeField] private PlayerAudioData playerAudioData;
-
-    [Header("Attack Settings")]
-    [SerializeField] private PlayerAttack leftHand;
-    [SerializeField] private PlayerAttack rightHand;
-
-    // 애니메이터 해시
-    private readonly int hashMoveX = Animator.StringToHash("MoveX");
-    private readonly int hashMoveY = Animator.StringToHash("MoveY");
-    private readonly int hashIsSprinting = Animator.StringToHash("IsSprinting");
-    private readonly int hashDiveRoll = Animator.StringToHash("DiveRoll");
-    private readonly int hashIsGrounded = Animator.StringToHash("IsGrounded");
-    private readonly int hashIsFalling = Animator.StringToHash("IsFalling");
-    private readonly int hashAttack = Animator.StringToHash("Attack");
 
     // 다이브 롤 중복 방지 변수
     private bool hasDiveRolled = false;
     private bool hasAttacked = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         inputHandler = GetComponent<PlayerInputHandler>();
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    /// <summary>
+    /// 플레이어 입력에 따른 이동 처리
+    /// </summary>
+    protected override void UpdateMovement()
     {
+        // 이동 입력 처리
         animator.SetFloat(hashMoveX, inputHandler.MoveInput.x, smoothDampTime, Time.deltaTime);
         animator.SetFloat(hashMoveY, inputHandler.MoveInput.y, smoothDampTime, Time.deltaTime);
         animator.SetBool(hashIsSprinting, inputHandler.SprintInput);
@@ -56,20 +41,7 @@ public class PlayerRootMotionController : MonoBehaviour
             hasDiveRolled = false;
         }
 
-        // 낙하 상태 처리
-        if (rigidbody.linearVelocity.y < -0.5f && !IsGrounded())
-        {
-            animator.SetBool(hashIsFalling, true);
-        }
-        else
-        {
-            animator.SetBool(hashIsFalling, false);
-        }
-
-        // 지상 상태 처리
-        animator.SetBool(hashIsGrounded, IsGrounded());
-
-        // 공격 입력 처리 (예시: AttackInput 추가 필요)
+        // 공격 입력 처리
         if (inputHandler.AttackInput && IsGrounded() && !hasAttacked)
         {
             animator.SetTrigger(hashAttack);
@@ -81,17 +53,10 @@ public class PlayerRootMotionController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 지면에 닿아있는지 확인
-    /// </summary>
-    /// <returns></returns>
-    private bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
-    }
+    #region Animation Event Handlers - Audio
 
     /// <summary>
-    /// 애니메이션 사운드 재생 함수들
+    /// 걷기 발소리 재생 Animation Event
     /// </summary>
     private void OnWalkFootStep()
     {
@@ -101,6 +66,9 @@ public class PlayerRootMotionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 달리기 발소리 재생 Animation Event
+    /// </summary>
     private void OnSprintFootStep()
     {
         if (inputHandler.MoveInput.magnitude > 0.1f && IsGrounded())
@@ -109,6 +77,9 @@ public class PlayerRootMotionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 다이브 롤 발소리 재생 Animation Event
+    /// </summary>
     private void OnDiveRollFootStep()
     {
         if (IsGrounded())
@@ -117,6 +88,9 @@ public class PlayerRootMotionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 다이브 롤 음성 재생 Animation Event
+    /// </summary>
     private void OnDiveRollVoice()
     {
         if (IsGrounded())
@@ -125,44 +99,39 @@ public class PlayerRootMotionController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 착지 발소리 재생 Animation Event
+    /// </summary>
     private void OnLandFootStep()
     {
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.landFootStepSound));
     }
 
+    /// <summary>
+    /// 착지 음성 재생 Animation Event
+    /// </summary>
     private void OnLandVoice()
     {
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.landVoice));
     }
 
+    /// <summary>
+    /// 공격 음성 재생 Animation Event
+    /// </summary>
     private void OnAttackVoice()
     {
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.attackVoice));
     }
 
-    /// <summary>
-    /// 왼쪽 손 공격 판정 활성화 Animation Event
-    /// </summary>
-    private void OnEnableLeftHandAttack()
+    private void OnHitVoice()
     {
-        leftHand.EnableAttack();
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.hitVoice));
     }
 
-    private void OnDisableLeftHandAttack()
+    private void OnDeadVoice()
     {
-        leftHand.DisableAttack();
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.deadVoice));
     }
 
-    /// <summary>
-    /// 오른쪽 손 공격 판정 활성화 Animation Event
-    /// </summary>
-    private void OnEnableRightHandAttack()
-    {
-        rightHand.EnableAttack();
-    }
-
-    private void OnDisableRightHandAttack()
-    {
-        rightHand.DisableAttack();
-    }
+    #endregion
 }

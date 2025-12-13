@@ -1,5 +1,4 @@
 using Unity.Cinemachine;
-using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandler))]
@@ -42,6 +41,12 @@ public class PlayerCameraController : MonoBehaviour
         rotationY = currentRotation.y;
 
         targetZoomDistance = minZoomDistance;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void LateUpdate()
