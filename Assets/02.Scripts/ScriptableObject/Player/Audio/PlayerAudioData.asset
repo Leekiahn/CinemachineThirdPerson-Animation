@@ -32,6 +32,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 79e6e1370ee1ca747b469e68d0dcb0fe, type: 3}
   - {fileID: 8300000, guid: b796f7e3b1a4d7344b7ee8d6c077a68f, type: 3}
   - {fileID: 8300000, guid: 1f080a1e65d584c4ca3e3c75fbb406b3, type: 3}
+  hitEnemySound:
+  - {fileID: 8300000, guid: 74198389e177d0948b63ca9a3fb22801, type: 3}
+  - {fileID: 8300000, guid: 72a9b2a2a3eaa584d9ba3a8e2166f0fd, type: 3}
+  - {fileID: 8300000, guid: a91b6eb6aee93de4fa0b41a96fd36c96, type: 3}
+  - {fileID: 8300000, guid: faf53b5b59d41a14e97c8858f4664122, type: 3}
   diveRollVoice:
   - {fileID: 8300000, guid: 70d21687156c5b84dbee279f3bb6086f, type: 3}
   - {fileID: 8300000, guid: 3f3669dc2bf61434783f4934700e82f6, type: 3}

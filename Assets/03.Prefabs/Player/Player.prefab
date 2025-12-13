@@ -231,8 +231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
   attackEffect: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
+  playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
 --- !u!82 &4409732285327917680
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1461,9 +1462,9 @@ MonoBehaviour:
     m_Bits: 64
   groundDistance: 0.2
   groundCheck: {fileID: 4863402579791104617}
-  playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
   leftHand: {fileID: 2175256822756766197}
   rightHand: {fileID: 4233079449390940975}
+  playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
 --- !u!82 &1697981984897648064
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1953,8 +1954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d172b549634d1246a15db85ce2bbb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
   attackEffect: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
+  playerStatsData: {fileID: 11400000, guid: 1630682c94ede4142abed77adefe990e, type: 2}
+  playerAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
 --- !u!82 &3245500193212647511
 AudioSource:
   m_ObjectHideFlags: 0
