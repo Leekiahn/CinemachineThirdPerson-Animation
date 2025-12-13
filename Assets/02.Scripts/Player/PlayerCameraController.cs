@@ -43,6 +43,12 @@ public class PlayerCameraController : MonoBehaviour
         targetZoomDistance = minZoomDistance;
     }
 
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     private void LateUpdate()
     {
         RotateCamera();

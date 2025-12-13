@@ -123,5 +123,15 @@ public class PlayerRootMotionController : CharacterRootMotionController
         audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.attackVoice));
     }
 
+    private void OnHitVoice()
+    {
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.hitVoice));
+    }
+
+    private void OnDeadVoice()
+    {
+        audioSource.PlayOneShot(playerAudioData.GetRandomClip(playerAudioData.deadVoice));
+    }
+
     #endregion
 }

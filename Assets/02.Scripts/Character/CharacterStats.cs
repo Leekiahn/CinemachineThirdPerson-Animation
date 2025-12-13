@@ -11,16 +11,16 @@ public class CharacterStats : MonoBehaviour
     protected readonly int hashHit = Animator.StringToHash("Hit");
     protected readonly int hashDie = Animator.StringToHash("Die");
 
-    public bool isDead { get; private set; } = false;
-
+    public bool isDead { get; private set; }
 
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    void Start()
+    protected virtual void OnEnable()
     {
+        isDead = false;
         health = characterStatsData.maxHealth;
     }
 

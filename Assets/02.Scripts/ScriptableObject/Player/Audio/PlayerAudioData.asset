@@ -52,3 +52,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d605f23065c7bd4985b70fb5e9ec22d, type: 3}
   - {fileID: 8300000, guid: b2bbe26d2b55a2941b1af113a4061cf8, type: 3}
   - {fileID: 8300000, guid: b859b702508e2294ba14b521d9ad4b93, type: 3}
+  hitVoice:
+  - {fileID: 8300000, guid: 5583e9c9a0afdf0408f9d0946666f85a, type: 3}
+  - {fileID: 8300000, guid: 572fe06c861000149bc4b51cc1fdb09d, type: 3}
+  - {fileID: 8300000, guid: 88b91714a2e2cbb428f61e18ca4d39d8, type: 3}
+  - {fileID: 8300000, guid: 80cc6816623c9a04580970e36613d8c4, type: 3}
+  deadVoice:
+  - {fileID: 8300000, guid: 37670623b2aa89a4589af3d795088c80, type: 3}
+  - {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
+  - {fileID: 8300000, guid: 9ac9e455e130968459fc7ff35a33428c, type: 3}
+  - {fileID: 8300000, guid: f325d26adff89d64cb93f78147635cf7, type: 3}

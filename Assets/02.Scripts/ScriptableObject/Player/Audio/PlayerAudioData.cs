@@ -14,6 +14,8 @@ public class PlayerAudioData : ScriptableObject
     public AudioClip[] diveRollVoice;
     public AudioClip[] landVoice;
     public AudioClip[] attackVoice;
+    public AudioClip[] hitVoice;
+    public AudioClip[] deadVoice;
 
     public AudioClip GetRandomClip(AudioClip[] clips)
     {
