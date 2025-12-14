@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyRootMotionController : CharacterRootMotionController
 {
     [Header("Enemy Audio")]
-    [SerializeField] private PlayerAudioData enemyAudioData;
+    [SerializeField] private AudioData enemyAudioData;
 
     [Header("Target Settings")]
     [SerializeField] private Transform target;

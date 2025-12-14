@@ -8,7 +8,7 @@ public class PlayerRootMotionController : CharacterRootMotionController
     private PlayerInputHandler inputHandler;
 
     [Header("Player Audio")]
-    [SerializeField] private PlayerAudioData playerAudioData;
+    [SerializeField] private AudioData playerAudioData;
 
     // 다이브 롤 중복 방지 변수
     private bool hasDiveRolled = false;

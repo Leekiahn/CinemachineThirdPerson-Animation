@@ -6,7 +6,7 @@ public class PlayerAttack : CharacterAttack
     public CharacterStatsData playerStatsData;
 
     [Header("Player Audio")]
-    public PlayerAudioData playerAudioData;
+    public AudioData playerAudioData;
 
     /// <summary>
     /// 利苞狼 面倒 贸府

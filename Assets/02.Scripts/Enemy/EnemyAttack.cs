@@ -6,7 +6,7 @@ public class EnemyAttack : CharacterAttack
     public CharacterStatsData enemyStatsData;
 
     [Header("Enemy Audio")]
-    public PlayerAudioData enemyAudioData;
+    public AudioData enemyAudioData;
 
     protected override void OnTriggerEnter(Collider other)
     {

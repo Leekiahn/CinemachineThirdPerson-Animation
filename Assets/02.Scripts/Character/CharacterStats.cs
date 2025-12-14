@@ -5,7 +5,7 @@ public class CharacterStats : MonoBehaviour
     protected Animator animator;
 
     [SerializeField] protected CharacterStatsData characterStatsData;
-    protected float health;
+    public float health { get; private set; }
 
 
     protected readonly int hashHit = Animator.StringToHash("Hit");
@@ -22,6 +22,17 @@ public class CharacterStats : MonoBehaviour
     {
         isDead = false;
         health = characterStatsData.maxHealth;
+    }
+
+    public void HealHealth(float healAmount)
+    {
+        if (isDead) return;
+        health += healAmount;
+        if (health > characterStatsData.maxHealth)
+        {
+            health = characterStatsData.maxHealth;
+        }
+        Debug.Log($"{gameObject.name} healed by {healAmount}. Current health: {health}");
     }
 
     public void TakeDamage(float damage)

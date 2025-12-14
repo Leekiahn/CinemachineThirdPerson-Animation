@@ -5,14 +5,13 @@ using UnityEngine;
 /// </summary>
 public abstract class CharacterAttack : MonoBehaviour
 {
-    protected AudioSource audioSource;
+    [SerializeField] protected AudioSource audioSource;
     protected Collider attackCollider;
 
     [SerializeField] protected GameObject attackEffect;
 
     protected virtual void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         attackCollider = GetComponent<Collider>();
 
         if (attackCollider != null)
