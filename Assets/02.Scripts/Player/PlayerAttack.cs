@@ -13,7 +13,7 @@ public class PlayerAttack : CharacterAttack
     /// </summary>
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (other.CompareTag("Enemy"))
         {
             // Enemy에게 데미지 전달
             CharacterStats enemyStats = other.GetComponent<CharacterStats>();

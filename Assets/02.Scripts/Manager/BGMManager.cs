@@ -3,7 +3,7 @@ using UnityEngine;
 public class BGMManager : Singleton<BGMManager>
 {
     private AudioSource audioSource;
-    [SerializeField] private AudioData audioData;
+    public AudioData audioData;
 
     protected override void Awake()
     {
@@ -12,10 +12,6 @@ public class BGMManager : Singleton<BGMManager>
         audioSource.loop = true;
     }
 
-    private void OnEnable()
-    {
-        PlayBGM(audioData.BGM);
-    }
     public void PlayBGM(AudioClip clip)
     {
         if (audioSource.clip == clip) return;

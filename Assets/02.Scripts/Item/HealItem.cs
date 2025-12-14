@@ -5,6 +5,12 @@ public class HealItem : MonoBehaviour
     [SerializeField] private AudioData healAudioData;
 
     [SerializeField] private float healAmount = 20f;
+    [SerializeField] private float rotationSpeed = 50f;
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +22,7 @@ public class HealItem : MonoBehaviour
             characterStats.HealHealth(healAmount);
             SFXManager.Instance.PlayOneShot(healAudioData.healSound);
             Debug.Log($"{other.gameObject.name} healed by {healAmount}. Current health: {characterStats.health}");
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
