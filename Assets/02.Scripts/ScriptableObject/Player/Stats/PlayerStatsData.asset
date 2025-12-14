@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerStatsData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackDamage: 40
+  attackDamage: 23

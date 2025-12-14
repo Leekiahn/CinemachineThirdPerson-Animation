@@ -13,7 +13,7 @@ public class EnemyStats : CharacterStats
     protected override void Awake()
     {
         base.Awake();
-        enemyFactory = FindObjectOfType<EnemyFactory>();
+        enemyFactory = FindAnyObjectByType<EnemyFactory>();
     }
 
     protected override void OnEnable()

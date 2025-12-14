@@ -6,14 +6,14 @@ public class PlayerAttack : CharacterAttack
     public CharacterStatsData playerStatsData;
 
     [Header("Player Audio")]
-    public PlayerAudioData playerAudioData;
+    public AudioData playerAudioData;
 
     /// <summary>
     /// 적과의 충돌 처리
     /// </summary>
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (other.CompareTag("Enemy"))
         {
             // Enemy에게 데미지 전달
             CharacterStats enemyStats = other.GetComponent<CharacterStats>();

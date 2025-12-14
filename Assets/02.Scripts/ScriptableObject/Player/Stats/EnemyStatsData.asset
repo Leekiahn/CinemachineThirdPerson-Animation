@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemyStatsData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackDamage: 5
+  attackDamage: 20
