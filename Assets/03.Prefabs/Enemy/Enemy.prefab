@@ -1932,7 +1932,8 @@ MonoBehaviour:
   rightHand: {fileID: 8387696242360597486}
   enemyAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
   target: {fileID: 0}
-  attackRange: 1.5
+  attackRange: 1.8
+  attackExitRange: 4
   attackCooldown: 2
   detectionRange: 15
   patrolRadius: 15
