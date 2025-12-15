@@ -16,6 +16,7 @@ public class CharacterStats : MonoBehaviour
 
     // 체력 변경 이벤트
     public UnityEvent<float, float> onHealthChanged = new UnityEvent<float, float>();
+    public UnityEvent<bool> onUIVisibilityChanged = new UnityEvent<bool>();
 
     protected virtual void Awake()
     {
@@ -52,6 +53,7 @@ public class CharacterStats : MonoBehaviour
         Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {health}");
 
         onHealthChanged?.Invoke(health, maxHealth);
+        onUIVisibilityChanged?.Invoke(true);
 
         if (health <= 0)
         {
@@ -62,6 +64,7 @@ public class CharacterStats : MonoBehaviour
     protected virtual void Die()
     {
         isDead = true;
+        onUIVisibilityChanged?.Invoke(false);
         Debug.Log($"{gameObject.name} has died.");
     }
 }
