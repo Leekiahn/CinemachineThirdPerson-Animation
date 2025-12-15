@@ -46,6 +46,9 @@ public class EnemyRootMotionController : CharacterRootMotionController
         base.Update();
 
         navMeshAgent.nextPosition = transform.position;
+
+        // localVelocity 업데이트 추가
+        localVelocity = transform.InverseTransformDirection(navMeshAgent.velocity);
     }
 
     private void OnEnable()
@@ -59,8 +62,8 @@ public class EnemyRootMotionController : CharacterRootMotionController
         if (target == null)
         {
             isAttacking = false;
+            hasAttacked = false;
             Patrol();
-            Debug.Log("순찰 중");
             return;
         }
 
@@ -70,8 +73,8 @@ public class EnemyRootMotionController : CharacterRootMotionController
         if (distanceToTarget > detectionRange || target.gameObject.GetComponent<CharacterStats>().isDead)
         {
             isAttacking = false;
+            hasAttacked = false;
             Patrol();
-            Debug.Log("순찰 중");
             return;
         }
 
@@ -83,13 +86,13 @@ public class EnemyRootMotionController : CharacterRootMotionController
         else if (distanceToTarget > attackExitRange)
         {
             isAttacking = false;
+            hasAttacked = false;
         }
 
         // 공격 모드일 때
         if (isAttacking)
         {
             Attack();
-            Debug.Log("공격 중");
             return;
         }
 
@@ -97,7 +100,6 @@ public class EnemyRootMotionController : CharacterRootMotionController
         if (distanceToTarget <= detectionRange)
         {
             Chase();
-            Debug.Log("추적 중");
         }
     }
 
@@ -240,16 +242,23 @@ public class EnemyRootMotionController : CharacterRootMotionController
         animator.SetBool(hashIsSprinting, false);
 
         // 공격 쿨다운 처리
-        attackTimer += Time.deltaTime;
-        if (!hasAttacked && attackTimer >= attackCooldown)
+        if (!hasAttacked)
         {
-            // 공격 애니메이션 재생
+            // 즉시 첫 공격 실행
             animator.SetTrigger(hashAttack);
             hasAttacked = true;
             attackTimer = 0f;
         }
-
-        hasAttacked = false;
+        else
+        {
+            // 쿨다운 대기
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackCooldown)
+            {
+                animator.SetTrigger(hashAttack);
+                attackTimer = 0f;
+            }
+        }
     }
 
     #region Animation Event Handlers - Audio

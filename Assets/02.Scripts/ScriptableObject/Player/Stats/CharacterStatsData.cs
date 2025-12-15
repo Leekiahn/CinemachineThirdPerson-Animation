@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterStatsData : ScriptableObject
 {
     [Header("Stats")]
-    public float maxHealth;
+    [field: SerializeField] public float maxHealth { get; private set; }
 
 
     [Header("Attack Stats")]
