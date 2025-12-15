@@ -14,10 +14,6 @@ public class PlayerInputHandler : MonoBehaviour
     public bool CrouchInput { get; private set; }
     public bool AttackInput { get; private set; }
 
-    public bool ESCInput { get; private set; }
-
-    public event Action OnESCInputChanged;
-
     private void Awake()
     {
         inputAction = new PlayerInput();
@@ -46,8 +42,6 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Attack.started += OnAttackPerformed;
         inputAction.Player.Attack.canceled += OnAttackCanceled;
 
-        // ESC ¿Ã∫•∆Æ
-        inputAction.Player.ESC.started += OnEscStarted;
     }
 
     private void OnEnable()
@@ -124,10 +118,5 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnAttackCanceled(InputAction.CallbackContext context)
     {
         AttackInput = false;
-    }
-
-    private void OnEscStarted(InputAction.CallbackContext context)
-    {
-        OnESCInputChanged?.Invoke();
     }
 }
