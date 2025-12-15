@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,10 @@ public class PlayerInputHandler : MonoBehaviour
     public bool DiveRollInput { get; private set; }
     public bool CrouchInput { get; private set; }
     public bool AttackInput { get; private set; }
+
+    public bool ESCInput { get; private set; }
+
+    public event Action OnESCInputChanged;
 
     private void Awake()
     {
@@ -38,8 +43,11 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Look.canceled += OnLookCanceled;
 
         //공격 이벤트
-        inputAction.Player.Attack.performed += OnAttackPerformed;
+        inputAction.Player.Attack.started += OnAttackPerformed;
         inputAction.Player.Attack.canceled += OnAttackCanceled;
+
+        // ESC 이벤트
+        inputAction.Player.ESC.started += OnEscStarted;
     }
 
     private void OnEnable()
@@ -118,4 +126,8 @@ public class PlayerInputHandler : MonoBehaviour
         AttackInput = false;
     }
 
+    private void OnEscStarted(InputAction.CallbackContext context)
+    {
+        OnESCInputChanged?.Invoke();
+    }
 }

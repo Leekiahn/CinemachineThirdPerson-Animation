@@ -19,12 +19,6 @@ public abstract class CharacterAttack : MonoBehaviour
         {
             attackCollider.enabled = false;
         }
-
-        if(attackEffect != null)
-        {
-            attackEffect = Instantiate(attackEffect);
-            attackEffect.SetActive(false);
-        }
     }
 
     /// <summary>
@@ -58,22 +52,12 @@ public abstract class CharacterAttack : MonoBehaviour
     /// <summary>
     /// 플레이어 공격 이펙트 생성 (1초 후 비활성화)
     /// </summary>
-    protected virtual void SpawnAttackEffect(Vector3 position)
+    protected virtual void SpawnAttackEffect()
     {
         if (attackEffect != null)
         {
-            attackEffect.transform.position = position;
-            attackEffect.SetActive(true);
-            StartCoroutine(DisableEffectAfterDelay(0.2f));
-        }
-    }
-
-    private IEnumerator DisableEffectAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (attackEffect != null)
-        {
-            attackEffect.SetActive(false);
+            GameObject effect = Instantiate(attackEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 0.2f);
         }
     }
 }

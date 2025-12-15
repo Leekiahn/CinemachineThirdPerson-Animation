@@ -19,7 +19,7 @@ public class EnemyAttack : CharacterAttack
                 playerStats.TakeDamage(enemyStatsData.attackDamage);
 
                 // 공격 이펙트 생성
-                SpawnAttackEffect(transform.position);
+                SpawnAttackEffect();
 
                 // 플레이어 타격 사운드 재생
                 AudioClip hitClip = enemyAudioData.GetRandomClip(enemyAudioData.hitEnemySound);
