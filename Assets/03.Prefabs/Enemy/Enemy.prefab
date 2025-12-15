@@ -1585,7 +1585,7 @@ GameObject:
   - component: {fileID: 8387696242360597486}
   m_Layer: 0
   m_Name: B_R_Hand
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1936,7 +1936,7 @@ MonoBehaviour:
   attackCooldown: 2
   detectionRange: 15
   patrolRadius: 15
-  patrolWaitTime: 2
+  patrolWaitTime: 3
   reachDistance: 0.5
 --- !u!114 &2122843364506415571
 MonoBehaviour:
@@ -2157,7 +2157,7 @@ GameObject:
   - component: {fileID: 6835265858914588976}
   m_Layer: 0
   m_Name: B_L_Hand
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
