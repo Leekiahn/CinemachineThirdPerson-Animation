@@ -136,7 +136,6 @@ public class EnemyRootMotionController : CharacterRootMotionController
 
             animator.SetFloat(hashMoveY, 0f);
             animator.SetFloat(hashMoveX, 0f);
-            animator.SetBool(hashIsSprinting, false);
             return;
         }
 
@@ -168,7 +167,6 @@ public class EnemyRootMotionController : CharacterRootMotionController
                 Vector3 localMove = transform.InverseTransformDirection(direction);
                 animator.SetFloat(hashMoveY, localMove.z, smoothDampTime, Time.deltaTime);
                 animator.SetFloat(hashMoveX, localMove.x, smoothDampTime, Time.deltaTime);
-                animator.SetBool(hashIsSprinting, true);
             }
         }
     }
@@ -201,7 +199,6 @@ public class EnemyRootMotionController : CharacterRootMotionController
     private void Chase()
     {
         navMeshAgent.SetDestination(target.position);
-        animator.SetBool(hashIsSprinting, false);
         if (navMeshAgent.hasPath)
         {
             Vector3 direction = (navMeshAgent.steeringTarget - transform.position).normalized;

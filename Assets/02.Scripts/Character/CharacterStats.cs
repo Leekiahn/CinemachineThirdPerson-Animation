@@ -39,7 +39,6 @@ public class CharacterStats : MonoBehaviour
         {
             health = characterStatsData.maxHealth;
         }
-        Debug.Log($"{gameObject.name} healed by {healAmount}. Current health: {health}");
 
         onHealthChanged?.Invoke(health, maxHealth);
     }
@@ -50,7 +49,6 @@ public class CharacterStats : MonoBehaviour
 
         health -= damage;
         animator.SetTrigger(hashHit);
-        Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {health}");
 
         onHealthChanged?.Invoke(health, maxHealth);
         onUIVisibilityChanged?.Invoke(true);
@@ -65,6 +63,5 @@ public class CharacterStats : MonoBehaviour
     {
         isDead = true;
         onUIVisibilityChanged?.Invoke(false);
-        Debug.Log($"{gameObject.name} has died.");
     }
 }

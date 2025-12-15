@@ -31,16 +31,4 @@ public class PlayerAttack : CharacterAttack
             }
         }
     }
-
-    /// <summary>
-    /// 플레이어 공격 이펙트 생성 (1초 후 파괴)
-    /// </summary>
-    protected override void SpawnAttackEffect(Vector3 position)
-    {
-        if (attackEffect != null)
-        {
-            GameObject effect = Instantiate(attackEffect, position, Quaternion.identity);
-            Destroy(effect, 1f);
-        }
-    }
 }

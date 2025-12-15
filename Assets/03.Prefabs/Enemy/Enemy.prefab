@@ -2043,7 +2043,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7896884109308117531}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 62a93dfeec245e24d865c5ea8384bc4f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2055,7 +2055,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Height: 2.6
   m_Direction: 1
   m_Center: {x: 0, y: 1.3, z: 0}
@@ -2227,9 +2227,9 @@ MonoBehaviour:
   rightHand: {fileID: 8387696242360597486}
   enemyAudioData: {fileID: 11400000, guid: 9af8cf60cfe4f294b813b9b5f91be38a, type: 2}
   target: {fileID: 0}
-  attackRange: 1.5
-  attackExitRange: 2.5
-  attackCooldown: 1.8
+  attackRange: 2
+  attackExitRange: 3
+  attackCooldown: 1.5
   detectionRange: 15
   patrolRadius: 15
   patrolWaitTime: 3

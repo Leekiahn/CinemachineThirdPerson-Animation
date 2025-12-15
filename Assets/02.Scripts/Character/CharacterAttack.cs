@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// 캐릭터의 공격 판정을 처리하는 베이스 클래스
@@ -17,6 +18,12 @@ public abstract class CharacterAttack : MonoBehaviour
         if (attackCollider != null)
         {
             attackCollider.enabled = false;
+        }
+
+        if(attackEffect != null)
+        {
+            attackEffect = Instantiate(attackEffect);
+            attackEffect.SetActive(false);
         }
     }
 
@@ -49,14 +56,24 @@ public abstract class CharacterAttack : MonoBehaviour
     protected abstract void OnTriggerEnter(Collider other);
 
     /// <summary>
-    /// 공격 이펙트 생성
+    /// 플레이어 공격 이펙트 생성 (1초 후 비활성화)
     /// </summary>
-    /// <param name="position">이펙트 생성 위치</param>
     protected virtual void SpawnAttackEffect(Vector3 position)
     {
         if (attackEffect != null)
         {
-            Instantiate(attackEffect, position, Quaternion.identity);
+            attackEffect.transform.position = position;
+            attackEffect.SetActive(true);
+            StartCoroutine(DisableEffectAfterDelay(0.2f));
+        }
+    }
+
+    private IEnumerator DisableEffectAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (attackEffect != null)
+        {
+            attackEffect.SetActive(false);
         }
     }
 }

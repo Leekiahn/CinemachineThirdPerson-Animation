@@ -27,13 +27,4 @@ public class EnemyAttack : CharacterAttack
             }
         }
     }
-
-    protected override void SpawnAttackEffect(Vector3 position)
-    {
-        if (attackEffect != null)
-        {
-            GameObject effect = Instantiate(attackEffect, position, Quaternion.identity);
-            Destroy(effect, 1f);
-        }
-    }
 }
