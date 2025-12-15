@@ -86,7 +86,6 @@ public class EnemyRootMotionController : CharacterRootMotionController
         else if (distanceToTarget > attackExitRange)
         {
             isAttacking = false;
-            hasAttacked = false;
         }
 
         // 공격 모드일 때
