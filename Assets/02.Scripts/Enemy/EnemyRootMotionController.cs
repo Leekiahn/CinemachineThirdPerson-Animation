@@ -10,6 +10,7 @@ public class EnemyRootMotionController : CharacterRootMotionController
     [Header("Target Settings")]
     [SerializeField] private Transform target;
     [SerializeField] private float attackRange;
+    [SerializeField] private float attackExitRange; // 공격 상태를 벗어나는 거리
     [SerializeField] private float attackCooldown; // 공격 쿨다운
     [SerializeField] private float detectionRange; // 감지 범위
 
@@ -28,44 +29,102 @@ public class EnemyRootMotionController : CharacterRootMotionController
     private float patrolWaitTimer = 0f;
     private bool isWaiting = false;
 
+    // 공격 상태 추적
+    private bool isAttacking = false;
+
     protected override void Awake()
     {
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        // NavMeshAgent 설정 - Root Motion 사용
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.updatePosition = false; // Root Motion이 위치 제어
-            navMeshAgent.updateRotation = false; // 수동으로 회전 제어
-        }
-
-        // 초기 순찰 목적지 설정
-        SetNewPatrolDestination();
+        navMeshAgent.updatePosition = false; // Root Motion과 충돌 방지
+        navMeshAgent.updateRotation = false; // Root Motion과 충돌 방지
     }
 
     protected override void Update()
     {
         base.Update();
 
-        // NavMeshAgent와 Root Motion 위치 동기화
-        if (navMeshAgent != null && navMeshAgent.enabled)
+        navMeshAgent.nextPosition = transform.position;
+
+        // localVelocity 업데이트 추가
+        localVelocity = transform.InverseTransformDirection(navMeshAgent.velocity);
+    }
+
+    private void OnEnable()
+    {
+        // 플레이어 찾기
+        FindPlayer();
+    }
+
+    protected override void UpdateMovement()
+    {
+        if (target == null)
         {
-            navMeshAgent.nextPosition = transform.position;
+            isAttacking = false;
+            hasAttacked = false;
+            Patrol();
+            return;
         }
 
-        // 공격 쿨다운 타이머
-        if (hasAttacked)
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+        // detectionRange 밖에 있거나 타겟이 죽었으면 순찰
+        if (distanceToTarget > detectionRange || target.gameObject.GetComponent<CharacterStats>().isDead)
         {
-            attackTimer += Time.deltaTime;
-            if (attackTimer >= attackCooldown)
-            {
-                hasAttacked = false;
-                attackTimer = 0f;
-            }
+            isAttacking = false;
+            hasAttacked = false;
+            Patrol();
+            return;
         }
 
-        // 순찰 대기 타이머
+        // 공격 모드 진입/유지 로직
+        if (distanceToTarget <= attackRange)
+        {
+            isAttacking = true;
+        }
+        else if (distanceToTarget > attackExitRange)
+        {
+            isAttacking = false;
+        }
+
+        // 공격 모드일 때
+        if (isAttacking)
+        {
+            Attack();
+            return;
+        }
+
+        // 감지 범위 내에 있으면 추적
+        if (distanceToTarget <= detectionRange)
+        {
+            Chase();
+        }
+    }
+
+    /// <summary>
+    /// Player 찾기
+    /// </summary>
+    private void FindPlayer()
+    {
+        GameObject PlayerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (PlayerObject != null)
+        {
+            target = PlayerObject.transform;
+        }
+        else
+        {
+            target = null;
+        }
+    }
+
+    /// <summary>
+    /// 순찰 로직
+    /// </summary>
+    private void Patrol()
+    {
+        // 대기 중
         if (isWaiting)
         {
             patrolWaitTimer += Time.deltaTime;
@@ -73,204 +132,128 @@ public class EnemyRootMotionController : CharacterRootMotionController
             {
                 isWaiting = false;
                 patrolWaitTimer = 0f;
-                SetNewPatrolDestination();
+            }
+
+            animator.SetFloat(hashMoveY, 0f);
+            animator.SetFloat(hashMoveX, 0f);
+            return;
+        }
+
+        // 목적지 도착 -> 대기 시작
+        if (patrolDestination != Vector3.zero &&
+            Vector3.Distance(transform.position, patrolDestination) <= reachDistance)
+        {
+            isWaiting = true;
+            patrolDestination = Vector3.zero;
+            return;
+        }
+
+        // 새 목적지 설정
+        if (patrolDestination == Vector3.zero)
+        {
+            patrolDestination = GetRandomPointOnNavMesh(transform.position, patrolRadius);
+            navMeshAgent.SetDestination(patrolDestination);
+        }
+
+        // 이동
+        if (navMeshAgent.hasPath)
+        {
+            Vector3 direction = (navMeshAgent.steeringTarget - transform.position).normalized;
+            direction.y = 0f;
+
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5f);
+                Vector3 localMove = transform.InverseTransformDirection(direction);
+                animator.SetFloat(hashMoveY, localMove.z, smoothDampTime, Time.deltaTime);
+                animator.SetFloat(hashMoveX, localMove.x, smoothDampTime, Time.deltaTime);
             }
         }
     }
-
-    protected override void UpdateMovement()
+    /// <summary>
+    /// NavMesh 상의 랜덤 위치 반환
+    /// </summary>
+    /// <param name="currentPosition"> 적의 현재 위치</param>
+    /// <param name="radius"> 탐색 반경 </param>
+    /// <returns> 유효한 NavMesh 위치, 실패 시 currentPosition 반환</returns>
+    private Vector3 GetRandomPointOnNavMesh(Vector3 currentPosition, float radius)
     {
-        // 타겟이 없으면 플레이어 찾기
-        if (target == null)
+        for (int i = 0; i < 30; i++) // 최대 30번 시도
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
+            Vector3 randomPoint = currentPosition + Random.insideUnitSphere * radius;
+            randomPoint.y = 0f;
+
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, radius, NavMesh.AllAreas))
             {
-                target = playerObj.transform;
-            }
-            else
-            {
-                return;
+                return hit.position;
             }
         }
 
-        if (navMeshAgent == null || !navMeshAgent.enabled)
-        {
-            return;
-        }
+        return currentPosition; // 실패 시 현재 위치 반환
+    }
 
-        if (target.gameObject.GetComponent<CharacterStats>().isDead)
-        {
-            // 타겟이 죽었으면 순찰 모드로 전환
-            PatrolMode();
-            return;
-        }
 
-        // 타겟과의 거리 계산
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-        // 공격 범위 안이면 공격
-        if (distanceToTarget <= attackRange)
+    /// <summary>
+    /// 추적 로직
+    /// </summary>
+    private void Chase()
+    {
+        navMeshAgent.SetDestination(target.position);
+        if (navMeshAgent.hasPath)
         {
-            AttackMode();
-        }
-        // 감지 범위 안이면 추적
-        else if (distanceToTarget <= detectionRange)
-        {
-            ChaseMode();
-        }
-        // 감지 범위 밖이면 순찰
-        else
-        {
-            PatrolMode();
+            Vector3 direction = (navMeshAgent.steeringTarget - transform.position).normalized;
+            direction.y = 0f;
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10f);
+                Vector3 localMove = transform.InverseTransformDirection(direction);
+                animator.SetFloat(hashMoveY, localMove.z, smoothDampTime, Time.deltaTime);
+                animator.SetFloat(hashMoveX, localMove.x, smoothDampTime, Time.deltaTime);
+            }
         }
     }
 
     /// <summary>
-    /// 공격 모드
+    /// 공격 로직
     /// </summary>
-    private void AttackMode()
+    private void Attack()
     {
-        // NavMesh 완전 정지
-        navMeshAgent.isStopped = true;
         navMeshAgent.ResetPath();
 
-        // 이동 애니메이션 즉시 정지
-        animator.SetFloat(hashMoveX, 0);
-        animator.SetFloat(hashMoveY, 0);
-
-        // 타겟 방향으로 회전
+        // 타겟 방향으로 회전 (공격 중에도 타겟을 바라봄)
         Vector3 directionToTarget = (target.position - transform.position).normalized;
-        directionToTarget.y = 0;
-
-        if (directionToTarget.magnitude > 0.1f)
+        directionToTarget.y = 0f;
+        if (directionToTarget != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(directionToTarget),
+                Time.deltaTime * 10f
+            );
         }
 
-        // 쿨다운이 끝나면 공격
-        if (IsGrounded() && !hasAttacked)
+        // 이동 애니메이션 정지
+        animator.SetFloat(hashMoveY, 0f);
+        animator.SetFloat(hashMoveX, 0f);
+        animator.SetBool(hashIsSprinting, false);
+
+        // 공격 쿨다운 처리
+        if (!hasAttacked)
         {
+            // 즉시 첫 공격 실행
             animator.SetTrigger(hashAttack);
             hasAttacked = true;
-        }
-
-        localVelocity = Vector3.zero;
-    }
-
-    /// <summary>
-    /// 추적 모드
-    /// </summary>
-    private void ChaseMode()
-    {
-        // 순찰 대기 상태 해제
-        isWaiting = false;
-        patrolWaitTimer = 0f;
-
-        // NavMeshAgent 활성화 및 목적지 설정
-        navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(target.position);
-
-        // NavMeshAgent의 desiredVelocity를 로컬 좌표로 변환
-        localVelocity = transform.InverseTransformDirection(navMeshAgent.desiredVelocity);
-        localVelocity.y = 0;
-
-        // 애니메이터에 이동 값 전달 (정규화)
-        if (navMeshAgent.speed > 0)
-        {
-            float normalizedX = localVelocity.x / navMeshAgent.speed;
-            float normalizedZ = localVelocity.z / navMeshAgent.speed;
-
-            animator.SetFloat(hashMoveX, normalizedX, smoothDampTime, Time.deltaTime);
-            animator.SetFloat(hashMoveY, normalizedZ, smoothDampTime, Time.deltaTime);
-        }
-
-        // 이동 방향으로 회전
-        if (navMeshAgent.desiredVelocity.magnitude > 0.1f)
-        {
-            Vector3 direction = navMeshAgent.desiredVelocity.normalized;
-            direction.y = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
-        }
-    }
-
-    /// <summary>
-    /// 순찰 모드
-    /// </summary>
-    private void PatrolMode()
-    {
-        // 대기 중이면 정지 상태 유지
-        if (isWaiting)
-        {
-            navMeshAgent.isStopped = true;
-            animator.SetFloat(hashMoveX, 0, smoothDampTime, Time.deltaTime);
-            animator.SetFloat(hashMoveY, 0, smoothDampTime, Time.deltaTime);
-            localVelocity = Vector3.zero;
-            return;
-        }
-
-        // 목적지에 도착했는지 확인
-        float distanceToDestination = Vector3.Distance(transform.position, patrolDestination);
-        if (distanceToDestination <= reachDistance)
-        {
-            // 도착하면 대기 상태로 전환
-            isWaiting = true;
-            navMeshAgent.isStopped = true;
-            animator.SetFloat(hashMoveX, 0, smoothDampTime, Time.deltaTime);
-            animator.SetFloat(hashMoveY, 0, smoothDampTime, Time.deltaTime);
-            localVelocity = Vector3.zero;
-            return;
-        }
-
-        // 순찰 목적지로 이동
-        navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(patrolDestination);
-
-        // NavMeshAgent의 desiredVelocity를 로컬 좌표로 변환
-        localVelocity = transform.InverseTransformDirection(navMeshAgent.desiredVelocity);
-        localVelocity.y = 0;
-
-        // 애니메이터에 이동 값 전달 (정규화)
-        if (navMeshAgent.speed > 0)
-        {
-            float normalizedX = localVelocity.x / navMeshAgent.speed;
-            float normalizedZ = localVelocity.z / navMeshAgent.speed;
-
-            animator.SetFloat(hashMoveX, normalizedX, smoothDampTime, Time.deltaTime);
-            animator.SetFloat(hashMoveY, normalizedZ, smoothDampTime, Time.deltaTime);
-        }
-
-        // 이동 방향으로 회전
-        if (navMeshAgent.desiredVelocity.magnitude > 0.1f)
-        {
-            Vector3 direction = navMeshAgent.desiredVelocity.normalized;
-            direction.y = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
-        }
-    }
-
-    /// <summary>
-    /// 새로운 순찰 목적지 설정
-    /// </summary>
-    private void SetNewPatrolDestination()
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection += transform.position;
-        randomDirection.y = transform.position.y; // Y축 고정
-
-        NavMeshHit hit;
-        // NavMesh 위의 유효한 위치 찾기
-        if (NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas))
-        {
-            patrolDestination = hit.position;
+            attackTimer = 0f;
         }
         else
         {
-            // 유효한 위치를 찾지 못하면 현재 위치 유지
-            patrolDestination = transform.position;
+            // 쿨다운 대기
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackCooldown)
+            {
+                animator.SetTrigger(hashAttack);
+                attackTimer = 0f;
+            }
         }
     }
 
@@ -350,6 +333,10 @@ public class EnemyRootMotionController : CharacterRootMotionController
         // 공격 범위 시각화 (빨간색)
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        // 공격 유지 범위 시각화 (주황색)
+        Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
+        Gizmos.DrawWireSphere(transform.position, attackExitRange);
 
         // 현재 순찰 목적지 표시 (노란색)
         if (Application.isPlaying && patrolDestination != Vector3.zero)

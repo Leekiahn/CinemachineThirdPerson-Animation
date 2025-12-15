@@ -19,21 +19,12 @@ public class EnemyAttack : CharacterAttack
                 playerStats.TakeDamage(enemyStatsData.attackDamage);
 
                 // 공격 이펙트 생성
-                SpawnAttackEffect(transform.position);
+                SpawnAttackEffect();
 
                 // 플레이어 타격 사운드 재생
                 AudioClip hitClip = enemyAudioData.GetRandomClip(enemyAudioData.hitEnemySound);
                 audioSource.PlayOneShot(hitClip);
             }
-        }
-    }
-
-    protected override void SpawnAttackEffect(Vector3 position)
-    {
-        if (attackEffect != null)
-        {
-            GameObject effect = Instantiate(attackEffect, position, Quaternion.identity);
-            Destroy(effect, 1f);
         }
     }
 }

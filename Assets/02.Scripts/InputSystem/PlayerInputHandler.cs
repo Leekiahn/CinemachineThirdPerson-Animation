@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,8 +39,9 @@ public class PlayerInputHandler : MonoBehaviour
         inputAction.Player.Look.canceled += OnLookCanceled;
 
         //공격 이벤트
-        inputAction.Player.Attack.performed += OnAttackPerformed;
+        inputAction.Player.Attack.started += OnAttackPerformed;
         inputAction.Player.Attack.canceled += OnAttackCanceled;
+
     }
 
     private void OnEnable()
@@ -117,5 +119,4 @@ public class PlayerInputHandler : MonoBehaviour
     {
         AttackInput = false;
     }
-
 }

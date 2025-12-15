@@ -29,6 +29,7 @@ public class PlayerCameraController : MonoBehaviour
     private void Awake()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
+        cinemachineThirdPersonFollow = FindAnyObjectByType<CinemachineThirdPersonFollow>();
     }
 
     private void Start()
@@ -41,6 +42,7 @@ public class PlayerCameraController : MonoBehaviour
         rotationY = currentRotation.y;
 
         targetZoomDistance = minZoomDistance;
+
     }
 
     private void OnDisable()
