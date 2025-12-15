@@ -1,55 +1,44 @@
-# CinemachineThirdPerson & Animation
-## 🎥 데모 영상
+Unity 기반 3인칭 액션 게임 프로젝트
 
-## ✨ 구현 기능
-
-### 🎮 입력 시스템
-- Unity Input System 기반 입력 관리
-- 이동, 다이브롤, 스프린트, 시점 회전, 줌 입력 처리
-
-### 🏃 플레이어 이동
-- Root Motion 기반 물리 이동
-- 부드러운 블렌드 애니메이션
-- 스프린트 기능
-- 다이브롤 기능
-
-### 📷 카메라 컨트롤
-- Cinemachine 기반 3인칭 카메라
-- 마우스 시점 회전
-- 줌 인/아웃 기능
-
-### 🎭 애니메이션
-- Root Motion 기반 애니메이션
-- 이동 방향별 블렌드 애니메이션
-- 다이브롤 애니메이션
-- 착지 애니메이션
-- 지면 감지 시스템
-
-### 🔊 사운드 시스템
-- 걷기/달리기 발자국 소리 (랜덤 재생)
-- 다이브롤 효과음 및 음성
-- 착지 효과음 및 음성
-- 애니메이션 이벤트 기반 사운드 재생
-
-## 🛠️ 기술 스택
-- Unity 2022.3 LTS
-- C# 9.0 / .NET Framework 4.7.1
-- Unity Input System
-- Cinemachine
-- Root Motion Animation
-- Physics-based Movement (Rigidbody)
-
+## ✨ 주요 기능
+  
+- 🎮 Unity Input System 기반 플레이어 입력
+- 🎥 Cinemachine 3인칭 카메라
+- ⚔️ 애니메이션 기반 전투 시스템
+- 🤖 NavMesh AI 적 시스템
+  
+## 🎯 핵심 시스템
+  
+### Input System
+**`PlayerInputHandler`** - Unity Input System 입력 처리
+- 이동, 시점, 줌, 스프린트, 회피, 공격
+  
+### Character System
+**`CharacterStats`** - 캐릭터 스탯 관리 (베이스 클래스)
+- HP 시스템, 데미지/힐링, 사망 처리
+  
+**`CharacterAttack`** - 공격 시스템 (추상 클래스)
+- 콜라이더 기반 공격, 애니메이션 이벤트 연동
+  
+### Player
+**`PlayerAttack`** - 플레이어 공격 구현
+  
+### Enemy System
+**`EnemyStats`** - 적 스탯 및 NavMesh 이동
+**`EnemyAttack`** - 적 공격 구현
+**`EnemySpawnTrigger`** - 트리거 기반 적 스폰
+  
 ## 🎮 조작법
-- **WASD**: 이동
-- **Shift**: 스프린트
-- **Space**: 다이브롤
-- **Mouse**: 시점 회전
-- **Mouse Wheel**: 줌
+  
+| 키 | 기능 |
+|---|---|
+| WASD | 이동 |
+| 마우스 | 시점 회전 |
+| 마우스 휠 | 줌 |
+| Shift | 스프린트 |
+| Space | 회피 구르기 |
+| 좌클릭 | 공격 |
+| E | 적 스폰 (테스트) |
 
-## 📂 프로젝트 구조  
-Player GameObject  
-├── PlayerInputHandler (입력 관리)  
-├── PlayerMovement (이동 처리)  
-├── PlayerCameraController (카메라 제어)  
-├── PlayerAnimationController (애니메이션 제어)  
-├── Rigidbody (물리) └── Animator (애니메이션)  
+## 🚀 시작하기
+https://phikozz.itch.io/punchpunch
