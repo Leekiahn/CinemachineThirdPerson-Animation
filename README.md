@@ -45,6 +45,6 @@ https://phikozz.itch.io/punchpunch
   
 ## 🎮 게임 플레이 영상
 
-[![Attic Lab Gameplay](https://img.youtube.com/vi/JYz7H6ehIl8/maxresdefault.jpg)](https://www.youtube.com/watch?v=JYz7H6ehIl8)
+[![Gameplay](https://img.youtube.com/vi/JYz7H6ehIl8/maxresdefault.jpg)](https://www.youtube.com/watch?v=JYz7H6ehIl8)
 
 *이미지를 클릭하면 게임 플레이 영상을 시청할 수 있습니다.*
