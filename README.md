@@ -42,6 +42,9 @@ Unity 기반 3인칭 액션 게임 프로젝트
 
 ## 🚀 시작하기
 https://phikozz.itch.io/punchpunch
-
   
-[![Video Title](https://img.youtube.com/vi/JYz7H6ehIl8/0.jpg)](https://www.youtube.com/watch?v=JYz7H6ehIl8)
+## 🎮 게임 플레이 영상
+
+[![Attic Lab Gameplay](https://img.youtube.com/vi/JYz7H6ehIl8/maxresdefault.jpg)](https://www.youtube.com/watch?v=JYz7H6ehIl8)
+
+*이미지를 클릭하면 게임 플레이 영상을 시청할 수 있습니다.*
