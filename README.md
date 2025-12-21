@@ -1,13 +1,13 @@
 Unity 기반 3인칭 액션 게임 프로젝트
 
-## ✨ 주요 기능
+##  주요 기능
   
 - 🎮 Unity Input System 기반 플레이어 입력
 - 🎥 Cinemachine 3인칭 카메라
 - ⚔️ 애니메이션 기반 전투 시스템
 - 🤖 NavMesh AI 적 시스템
   
-## 🎯 핵심 시스템
+##  핵심 시스템
   
 ### Input System
 **`PlayerInputHandler`** - Unity Input System 입력 처리
@@ -28,7 +28,7 @@ Unity 기반 3인칭 액션 게임 프로젝트
 **`EnemyAttack`** - 적 공격 구현
 **`EnemySpawnTrigger`** - 트리거 기반 적 스폰
   
-## 🎮 조작법
+##  조작법
   
 | 키 | 기능 |
 |---|---|
@@ -40,10 +40,10 @@ Unity 기반 3인칭 액션 게임 프로젝트
 | 좌클릭 | 공격 |
 | E | 적 스폰 (테스트) |
 
-## 🚀 시작하기
+##  시작하기
 https://phikozz.itch.io/punchpunch
   
-## 🎮 게임 플레이 영상
+##  게임 플레이 영상
 
 [![Gameplay](https://img.youtube.com/vi/JYz7H6ehIl8/maxresdefault.jpg)](https://www.youtube.com/watch?v=JYz7H6ehIl8)
 
